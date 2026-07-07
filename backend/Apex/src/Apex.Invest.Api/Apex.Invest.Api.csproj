@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Apex.Invest.Features\Apex.Invest.Features.csproj" />
+  </ItemGroup>
+	
+  <PropertyGroup>
+	<SourceAppSettingsConfigFile>appsettings.template.json</SourceAppSettingsConfigFile>
+	<TargetAppSettingsConfigFile>appsettings.json</TargetAppSettingsConfigFile>
+	<SourceNLogConfigFile>nlog.template.config</SourceNLogConfigFile>
+	<TargetNLogConfigFile>nlog.config</TargetNLogConfigFile>
+  </PropertyGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+	<Copy SourceFiles="$(SourceAppSettingsConfigFile)" DestinationFiles="$(TargetAppSettingsConfigFile)" Condition="!Exists($(TargetAppSettingsConfigFile))" />
+	<Copy SourceFiles="$(SourceNLogConfigFile)" DestinationFiles="$(TargetNLogConfigFile)" Condition="!Exists($(TargetNLogConfigFile))" />
+  </Target>
+
+</Project>
