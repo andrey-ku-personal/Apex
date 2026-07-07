@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Invest/">
+    <Project Path="src/Apex.Invest.Api/Apex.Invest.Api.csproj" />
+    <Project Path="src/Apex.Invest.Domain/Apex.Invest.Domain.csproj" />
+    <Project Path="src/Apex.Invest.Features.Tests/Apex.Invest.Features.Tests.csproj" />
+    <Project Path="src/Apex.Invest.Features/Apex.Invest.Features.csproj" Id="cccfed8c-634f-4f2d-a71b-84df4d85989f" />
+    <Project Path="src/Apex.Invest.Migrations/Apex.Invest.Migrations.csproj" />
+    <Project Path="src/Apex.Invest.Persistance/Apex.Invest.Persistance.csproj" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="src/Apex.Invest/Apex.Shared.Core/Apex.Shared.Core.csproj" />
+    <Project Path="src/Apex.Shared.Models/Apex.Shared.Models.csproj" />
+  </Folder>
+</Solution>

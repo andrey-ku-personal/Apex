@@ -1,0 +1,8 @@
+using Apex.Invest.Abstracts.Details;
+using Apex.Invest.Domain.Entities;
+using Apex.Invest.Features.Modules.Bonds.Details.Filters;
+using Apex.Invest.Features.Modules.Bonds.Details.Models;
+
+namespace Apex.Invest.Features.Modules.Bonds.Details.Services;
+
+public interface IBondDetailsService : IBaseDetailsService<BondDetailsModel, Bond, BondDetailsFilter>;
