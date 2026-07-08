@@ -26,4 +26,13 @@ public static class QueryExtension
     public static (int count, List<TEntity> items) Paginate<TEntity>(this IQueryable<TEntity> items, IPageFilter filter)
         where TEntity : class
         => new(items.Count(), [.. items.Skip(filter.PageNumber * filter.PageSize).Take(filter.PageSize == 0 ? items.Count() : filter.PageSize)]);
+
+    public static async Task<(int count, List<TEntity> items)> PaginateAsync<TEntity>(
+        this IQueryable<TEntity> items, IPageFilter filter, CancellationToken cancellationToken)
+        where TEntity : class
+    {
+        var count = await items.CountAsync(cancellationToken);
+        var page = await items.Skip(filter.PageNumber * filter.PageSize).Take(filter.PageSize == 0 ? count : filter.PageSize).ToListAsync(cancellationToken);
+        return (count, page);
+    }
 }

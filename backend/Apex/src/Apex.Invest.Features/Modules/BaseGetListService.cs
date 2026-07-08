@@ -20,10 +20,10 @@ public class BaseGetListService<TModel, TEntity, TFilter, TQuery>(
     {
         await using var db = await dbFactory.CreateDbContextAsync(cancellationToken);
 
-        var (count, items) = db.Set<TEntity>()
+        var (count, items) = await db.Set<TEntity>()
             .AsNoTracking()
             .ByQuery(new TQuery() { SortBy = filter.SortBy, IsAscending = filter.IsAscending })
-            .Paginate(filter);
+            .PaginateAsync(filter, cancellationToken);
 
         return new PageDataResponse<TModel>(count, mapper.MapToModel(items));
     }

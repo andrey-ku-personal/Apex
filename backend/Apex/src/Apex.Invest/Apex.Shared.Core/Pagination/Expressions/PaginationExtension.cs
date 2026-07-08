@@ -21,7 +21,7 @@ public static class PaginationExtension
     public static async Task<PageDataResponse<TEntity>> PageResultAsync<TEntity>(this IQueryable<TEntity> query, int skip, int take)
         where TEntity : class
     {
-        var count = query.Count();
+        var count = await query.CountAsync();
 
         var result = await query.Skip(skip).Take(take).ToListAsync();
 
