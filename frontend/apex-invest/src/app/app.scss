@@ -1,0 +1,14 @@
+.body-wrapper {
+  display: flex;
+  height: 100%;
+
+  .sidebar {
+    width: 16rem;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    background-color: #ffffff;
+    color: #000000;
+    border-right: 1px solid #e3e8e6;
+  }
+}

@@ -1,0 +1,31 @@
+<aside>
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-image">
+      <img src="icons/logo.svg" width="32" height="32" alt="Apex.Invest" />
+    </div>
+    <span class="sidebar-logo-title">Apex<span>.Invest</span></span>
+  </div>
+
+  <nav class="sidebar-navigation">
+    @for (key of navigationSections | objectKeys; track key) {
+      <p class="sidebar-navigation-title">{{ key }}</p>
+      @for (menuItem of navigationSections[key]; track menuItem) {
+        <a class="sidebar-nav-link" routerLinkActive="active" [routerLink]="menuItem.route">
+          <mat-icon class="sidebar-icon">{{ menuItem.icon }}</mat-icon>
+          {{ menuItem.label }}
+        </a>
+      }
+    }
+  </nav>
+
+  <div class="sidebar-user">
+    <div class="sidebar-user-card">
+      <div class="sidebar-user-avatar">AK</div>
+      <div class="sidebar-user-info">
+        <p class="sidebar-user-name">Андрей К.</p>
+        <p class="sidebar-user-email">andrey@apex.io</p>
+      </div>
+      <img src="icons/chevrons.svg"/>
+    </div>
+  </div>
+</aside>
