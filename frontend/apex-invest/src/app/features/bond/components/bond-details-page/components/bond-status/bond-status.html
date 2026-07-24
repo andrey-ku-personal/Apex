@@ -1,0 +1,22 @@
+<mat-card class="block-card general-data-card" appearance="outlined">
+  <mat-card-header>
+    <h3 class="card-header">
+      <mat-icon class="card-title-icon">description</mat-icon>
+        Данные выпуска
+      </h3>
+    </mat-card-header>
+  <mat-card-content class="status-data-form">
+    <app-form-date
+      label="Дата погашения"
+      formControlName="maturityDate"
+      [isRequired]="true"
+    />
+
+    <app-form-select
+      label="Статус"
+      [isRequired]="true"
+      [options]="statuses"
+      formControlName="status"
+    />
+  </mat-card-content>
+</mat-card>

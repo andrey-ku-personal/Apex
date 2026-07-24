@@ -53,3 +53,16 @@ html {
 .mat-mdc-select {
   --mat-select-container-elevation: 0 0 0 3px hsl(var(--ring) / 0.15);
 }
+
+/* Card */
+.mat-mdc-card-header {
+  padding: 1.25rem 1.25rem 0;
+}
+
+.mat-mdc-card-content {
+  padding: 0 1.25rem 1.25rem;
+
+  &:last-child {
+    padding-bottom: 1.25rem;
+  }
+}

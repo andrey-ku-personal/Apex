@@ -1,20 +1,6 @@
 .block-card {
   padding: 0;
   border-radius: 0.65rem;
-
-  ::ng-deep {
-    .mat-mdc-card-header {
-      padding: 1.25rem 1.25rem 0;
-    }
-
-    .mat-mdc-card-content {
-      padding: 0 1.25rem 1.25rem;
-
-      &:last-child {
-        padding-bottom: 1.25rem;
-      }
-    }
-  }
 }
 
 .operations-card-header {
