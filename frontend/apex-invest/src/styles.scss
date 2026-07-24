@@ -1,32 +1,46 @@
-@use '@angular/material' as mat;
+@use 'styles/material';
 
 * {
   box-sizing: border-box;
   text-rendering: optimizeLegibility;
 }
 
-*:not(mat-icon):not(.material-icons):not([class*="material-icons"]) {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+:root {
+  --background: 0 0% 100%;
+  --foreground: 160 10% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 160 10% 12%;
+  --primary: 158 64% 40%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 160 14% 96%;
+  --secondary-foreground: 160 10% 15%;
+  --muted: 160 14% 95%;
+  --muted-foreground: 160 4% 42%;
+  --accent: 158 40% 94%;
+  --accent-foreground: 158 50% 18%;
+  --border: 160 10% 90%;
+  --input: 160 10% 88%;
+  --ring: 158 64% 40%;
+  --radius: 0.65rem;
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 160 10% 15%;
+
+  --success: #16a34a;
+  --warning: #d97706;
+  --info: #2563eb;
+  --danger: #dc2626;
 }
 
 html {
   width: 100%;
   height: 100%;
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
 }
 
 body {
   color-scheme: light;
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   margin: 0;
   height: 100%;
   width: 100%;

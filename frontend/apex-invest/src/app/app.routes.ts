@@ -3,11 +3,12 @@ import { DashboardPage } from './features/dashboard/components/dashboard-page/da
 import { SharePage } from './features/share/components/share-page/share-page';
 import { DepositPage } from './features/deposit/components/deposit-page/deposit-page';
 import { BondPage } from './features/bond/components/bond-page/bond-page';
+import { BondDetailsPage } from './features/bond/components/bond-details-page/bond-details-page';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardPage },
   { path: 'share', component: SharePage },
-  { path: 'bond', component: BondPage },
+  { path: 'bond', component: BondDetailsPage },
   { path: 'deposit', component: DepositPage }
 ];

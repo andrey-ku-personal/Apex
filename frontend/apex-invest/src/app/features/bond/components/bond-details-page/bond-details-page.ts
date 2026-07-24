@@ -1,14 +1,18 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { BondMetadata } from './components/bond-metadata/bond-metadata';
+import { BondSellBuyOperations } from './components/bond-sell-buy-operations/bond-sell-buy-operations';
 
 @Component({
   selector: 'app-bond-details-page',
   imports: [
     ReactiveFormsModule,
-    MatCardModule,
-    MatIconModule
+    MatButtonModule,
+    MatIconModule,
+    BondMetadata,
+    BondSellBuyOperations,
   ],
   templateUrl: './bond-details-page.html',
   styleUrl: './bond-details-page.scss',
@@ -16,22 +20,24 @@ import { MatIconModule } from '@angular/material/icon';
 export class BondDetailsPage implements OnInit {
   private readonly fb = inject(FormBuilder);
 
-  protected dataForm: FormGroup = null!;
+  protected form: FormGroup = null!;
 
   public ngOnInit(): void {
-    this.dataForm = this.fb.group({
+    this.form = this.fb.group({
       ticker: ['', [Validators.required]],
       issuer: ['', [Validators.required]],
-      currency: ['', [Validators.required]],
-      faceValue: [null, [Validators.required, Validators.min(0)]],
+      currency: ['BYN', [Validators.required]],
+      parPrice: [null, [Validators.required, Validators.min(0)]],
       couponRate: [null, [Validators.required, Validators.min(0)]],
       paymentFrequency: ['', [Validators.required]],
-      firstPayment: [null],
-      maturityDate: [null, [Validators.required]]
+      nextCouponDate: [null],
+      maturityDate: [null, [Validators.required]],
+      status: ['active', [Validators.required]],
+      operations: this.fb.array([]),
     });
   }
 
   protected onSubmit() {
-    console.log(this.dataForm.value);
+    console.log(this.form.value);
   }
 }

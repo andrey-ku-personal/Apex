@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavigationSection } from './models/navigation-section';
+import { NavigationSection } from './models/navigation-section.model';
 import { ObjectKeysPipe } from './pipes/object-keys.pipe';
 import { MatIconModule } from '@angular/material/icon';
 

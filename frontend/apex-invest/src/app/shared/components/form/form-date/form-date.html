@@ -1,0 +1,17 @@
+<mat-form-field appearance="outline" class="form-field">
+  <mat-label>{{ label() }}{{ isRequired() ? ' *' : '' }}</mat-label>
+  <input
+    matInput
+    [matDatepicker]="picker"
+    [value]="value"
+    [placeholder]="placeholder()"
+    [disabled]="disabled"
+    (dateInput)="onSelect($event.value)"
+    (blur)="onTouch()"
+  />
+  <mat-datepicker-toggle matIconSuffix [for]="picker" />
+  <mat-datepicker #picker />
+  @if (errorMessage) {
+    <mat-error>{{ errorMessage }}</mat-error>
+  }
+</mat-form-field>

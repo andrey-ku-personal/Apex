@@ -1,0 +1,15 @@
+<mat-form-field appearance="outline" class="form-field">
+  <mat-label>{{ label() }}{{ isRequired() ? ' *' : '' }}</mat-label>
+  <input
+    matInput
+    type="text"
+    [value]="value || ''"
+    [placeholder]="placeholder()"
+    [disabled]="disabled"
+    (input)="onInput($event)"
+    (blur)="onTouch()"
+  />
+  @if (errorMessage) {
+    <mat-error>{{ errorMessage }}</mat-error>
+  }
+</mat-form-field>

@@ -1,0 +1,71 @@
+<mat-card class="block-card general-data-card" appearance="outlined">
+  <mat-card-header>
+    <h3 class="card-header">
+      <mat-icon class="card-title-icon">description</mat-icon>
+        Данные выпуска
+      </h3>
+    </mat-card-header>
+  <mat-card-content class="general-data-form">
+    <app-form-text
+      label="Тикер"
+      placeholder="Напр. ВГДО 000"
+      formControlName="ticker"
+      [isRequired]="true"
+    />
+    <app-form-text
+      label="Эмитент"
+      placeholder="Напр. Мин. фин. РБ"
+      formControlName="issuer"
+      [isRequired]="true"
+    />
+    <app-form-select
+      label="Валюта"
+      [options]="currencies"
+      formControlName="currency"
+      [isRequired]="true"
+    />
+
+    <app-form-number
+      label="Номинальная цена"
+      placeholder="1000"
+      formControlName="parPrice"
+      [isRequired]="true"
+    />
+
+    <app-form-number
+      label="Ставка купона, %"
+      placeholder="12.25"
+      formControlName="couponRate"
+      [step]=".01"
+      [isRequired]="true"
+    />
+
+    <app-form-select
+      label="Частота выплат"
+      formControlName="paymentFrequency"
+      [isRequired]="true"
+      [options]="frequencies"
+    />
+
+    <app-form-number
+      label="День выплаты купона"
+      placeholder="День месяца"
+      formControlName="nextCouponDate"
+      [step]="1"
+      [isRequired]="true"
+    />
+
+    <app-form-date
+      label="Дата погашения"
+      formControlName="maturityDate"
+      [isRequired]="true"
+    />
+
+    <app-form-select
+      label="Статус"
+      [isRequired]="true"
+      [options]="statuses"
+      formControlName="status"
+    />
+  </mat-card-content>
+</mat-card>

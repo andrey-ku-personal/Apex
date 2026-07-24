@@ -1,0 +1,291 @@
+.block-card {
+  padding: 0;
+  border-radius: 0.65rem;
+
+  ::ng-deep {
+    .mat-mdc-card-header {
+      padding: 1.25rem 1.25rem 0;
+    }
+
+    .mat-mdc-card-content {
+      padding: 0 1.25rem 1.25rem;
+
+      &:last-child {
+        padding-bottom: 1.25rem;
+      }
+    }
+  }
+}
+
+.operations-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.card-header {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  margin: 0 0 0.5rem 0;
+
+  .card-title-icon {
+    color: #25a777;
+    font-size: 1rem;
+    line-height: 1rem;
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.operations-count {
+  color: #676f6d;
+  font-size: 0.75rem;
+}
+
+.operations-summary {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 1rem 0;
+
+  .summary-state {
+    text-align: center;
+    padding: 0.625rem;
+    background-color: #f0f4f3b0;
+    border-radius: 0.5rem;
+
+    .summary-state-title {
+      color: #676f6d;
+      font-size: 0.75rem;
+      line-height: 1rem;
+      margin: 0;
+    }
+
+    .summary-state-value {
+      font-weight: 700;
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+      margin: 0;
+    }
+
+    .summary-state-value-success {
+      color: #16a34a;
+    }
+
+    .summary-state-value-danger {
+      color: #dc2626;
+    }
+  }
+}
+
+.operation-form-card {
+  background-color: #f0f4f366;
+  border: 1px solid #e3e9e7;
+  border-radius: 0.65rem;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.operation-form-card-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e3e9e7;
+  background-color: #ffffff99;
+}
+
+.operation-form-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2a27;
+  margin: 0;
+
+  .mat-icon {
+    width: 1rem;
+    height: 1rem;
+    font-size: 1rem;
+    color: #25a777;
+  }
+}
+
+.operation-form-card-body {
+  padding: 1rem;
+}
+
+.operation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem 1rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.form-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 0.25rem;
+
+  .form-summary-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #676f6d;
+    margin-bottom: 0.375rem;
+    display: block;
+  }
+
+  .form-summary-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1f2a27;
+    padding: 0.5rem 0.75rem;
+    background-color: #f0f4f366;
+    border: 1px solid #e3e9e7;
+    border-radius: 0.5rem;
+    display: block;
+  }
+}
+
+.operations-table {
+  margin-top: 0.5rem;
+  border: 1px solid #e3e9e7;
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  table {
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .mat-mdc-header-cell {
+      color: #676f6d;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid #e3e9e7;
+    }
+
+    .mat-mdc-cell {
+      font-size: 0.8125rem;
+      padding: 0.625rem 0.75rem;
+      border-bottom: 1px solid #e3e9e7;
+    }
+
+    .mat-mdc-row {
+      transition: background-color 0.15s ease;
+    }
+
+    .mat-mdc-row:hover .mat-mdc-cell {
+      background-color: #f0f4f333;
+    }
+
+    .row-buy {
+      box-shadow: inset 3px 0 0 0 #16a34a;
+    }
+
+    .row-sell {
+      box-shadow: inset 3px 0 0 0 #dc2626;
+    }
+  }
+}
+
+.op-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.op-dot-buy {
+  background: #16a34a;
+}
+
+.op-dot-sell {
+  background: #dc2626;
+}
+
+.op-type {
+  font-size: 0.75rem;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.op-type-buy {
+  color: #16a34a;
+}
+
+.op-type-sell {
+  color: #dc2626;
+}
+
+.cell-sum-sell {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.row-actions {
+  display: inline-flex;
+  gap: 0.25rem;
+
+  .mat-icon {
+    color: #676f6d;
+    width: 1.125rem;
+    height: 1.125rem;
+    font-size: 1.125rem;
+  }
+
+  .btn-icon-danger .mat-icon {
+    color: #dc2626;
+  }
+}
+
+.empty-operations {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+
+  .empty-icon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 2rem;
+    color: #676f6d80;
+  }
+
+  .empty-text {
+    color: #676f6d;
+    font-size: 0.875rem;
+    margin: 0.5rem 0 0;
+  }
+}
