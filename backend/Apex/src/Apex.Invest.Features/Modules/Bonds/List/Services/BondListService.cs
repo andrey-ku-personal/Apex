@@ -1,4 +1,4 @@
-using Apex.Invest.Domain.Entities;
+using Apex.Invest.Domain.Entities.Bond;
 using Apex.Invest.Factories;
 using Apex.Invest.Features.Modules.Bonds.List.Filters;
 using Apex.Invest.Features.Modules.Bonds.List.Mapper;

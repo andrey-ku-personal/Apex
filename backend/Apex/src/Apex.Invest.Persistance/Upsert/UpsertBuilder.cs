@@ -9,10 +9,10 @@ public class UpsertBuilder<TEntity, TSource>(DbSet<TEntity> set, TSource source)
     private TEntity? _entity;
     private Func<TSource, bool>? _createWhenCondition;
 
-    public UpsertBuilder<TEntity, TSource> OnKey(object? keyValue)
+    public UpsertBuilder<TEntity, TSource> OnKey(Func<TSource, object[]> keySelector)
     {
-        _entity = set.Find(keyValue);
-
+        var keys = keySelector(source);
+        _entity = set.Find(keys);
         return this;
     }
 
@@ -22,40 +22,21 @@ public class UpsertBuilder<TEntity, TSource>(DbSet<TEntity> set, TSource source)
         return this;
     }
 
-    public UpsertBuilder<TEntity, TSource> OnKey(params object?[] keyValues)
-    {
-        _entity = set.Find(keyValues);
-        return this;
-    }
-
-    public UpsertBuilder<TEntity, TSource> Map(Action<TSource, TEntity> mapFn)
-    {
-        if (_entity == null)
-        {
-            _entity = new();
-            set.Add(_entity);
-        }
-
-        mapFn(source, _entity);
-        return this;
-    }
-
     public async Task<TEntity> ExecuteAsync(Action<TSource, TEntity> updateFn, CancellationToken cancellationToken)
     {
-        if (_entity == null)
-            await AddAsync(cancellationToken);
+        var isNew = _entity == null;
+
+        if (isNew)
+        {
+            if (_createWhenCondition != null && !_createWhenCondition(source))
+                throw new InvalidOperationException($"Cannot create {typeof(TEntity).Name} - create condition was not met.");
+
+            _entity = new TEntity();
+            await set.AddAsync(_entity, cancellationToken);
+        }
 
         updateFn(source, _entity!);
 
         return _entity!;
-    }
-
-    private async Task AddAsync(CancellationToken cancellationToken)
-    {
-        if (_createWhenCondition != null && !_createWhenCondition(source))
-            throw new InvalidOperationException($"Cannot create {typeof(TEntity).Name} - create condition was not met.");
-
-        _entity = new();
-        await set.AddAsync(_entity, cancellationToken);
     }
 }

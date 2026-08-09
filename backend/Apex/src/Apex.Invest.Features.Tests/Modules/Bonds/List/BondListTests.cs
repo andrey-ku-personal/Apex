@@ -3,7 +3,7 @@ using Apex.Invest.Features.Modules.Bonds.Details.Services;
 using Apex.Invest.Features.Modules.Bonds.List.Filters;
 using Apex.Invest.Features.Modules.Bonds.List.Models;
 using Apex.Invest.Features.Modules.Bonds.List.Services;
-using Apex.Invest.Features.Tests.Modules.Bonds.Details;
+using Apex.Invest.Features.Tests.Modules.Bonds.Details.Fakers;
 using Apex.Shared.Core.Pagination.Models;
 using Shouldly;
 

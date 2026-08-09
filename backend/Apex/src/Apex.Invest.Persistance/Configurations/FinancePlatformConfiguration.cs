@@ -10,6 +10,12 @@ public class FinancePlatformConfiguration : IEntityTypeConfiguration<FinancePlat
     {
         builder.ToTable(@"FinancePlatform");
 
+        builder.HasData(
+            new FinancePlatform { Id = 1, Name = "Аигенис" },
+            new FinancePlatform { Id = 2, Name = "Беларус Банк" },
+            new FinancePlatform { Id = 3, Name = "Альфа Банк" }
+        );
+
         builder.HasKey(k => k.Id);
 
         builder

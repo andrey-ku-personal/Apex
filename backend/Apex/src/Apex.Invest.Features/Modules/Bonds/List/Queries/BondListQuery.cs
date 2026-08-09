@@ -1,11 +1,12 @@
+using Apex.Invest.Domain.Entities.Bond;
 using Apex.Shared.Core.Pagination;
 using System.Linq.Expressions;
 
 namespace Apex.Invest.Features.Modules.Bonds.List.Queries;
 
-public class BondListQuery : BaseSortQuery<Apex.Invest.Domain.Entities.Bond>
+public class BondListQuery : BaseSortQuery<Bond>
 {
-    public override Expression<Func<Apex.Invest.Domain.Entities.Bond, bool>> GetExpression()
+    public override Expression<Func<Bond, bool>> GetExpression()
     {
         var filter = base.GetExpression();
 

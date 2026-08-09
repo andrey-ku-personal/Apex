@@ -1,5 +1,4 @@
 ﻿using Apex.Invest.Domain.Abstractions;
-using Apex.Invest.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -7,13 +6,6 @@ namespace Apex.Invest.Persistance;
 
 public class EntitiesDbContext(DbContextOptions<EntitiesDbContext> options) : DbContext(options)
 {
-    public DbSet<FinanceInstrument> FinanceInstruments => Set<FinanceInstrument>();
-    public DbSet<Share> Shares => Set<Share>();
-    public DbSet<Bond> Bonds => Set<Bond>();
-    public DbSet<Deposit> Deposits => Set<Deposit>();
-    public DbSet<DepositOperation> DepositOperations => Set<DepositOperation>();
-    public DbSet<FinancePlatform> FinancePlatforms => Set<FinancePlatform>();
-
     protected IDbContextTransaction? _currentTransaction;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

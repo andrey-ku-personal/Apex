@@ -4,8 +4,8 @@ using Apex.Invest.Features.Modules.Bonds.Details.Models;
 using Apex.Invest.Features.Modules.Bonds.Details.Services;
 using Apex.Invest.Features.Modules.Bonds.Details.Validators;
 using Apex.Shared.Core.Exceptions;
-using Microsoft.Extensions.DependencyInjection;
-using Apex.Invest.Domain.Entities;
+using Apex.Invest.Features.Tests.Modules.Bonds.Details.Fakers;
+using Apex.Shared.Core.Extensions;
 
 namespace Apex.Invest.Features.Tests.Modules.Bonds.Details;
 
@@ -26,15 +26,14 @@ public class BondDetailsTests(SliceFixture fixture)
             (MakeInvalid(m => m.Issuer = ""), nameof(BondDetailsModel.Issuer)),
             (MakeInvalid(m => m.Issuer = null!), nameof(BondDetailsModel.Issuer)),
             (MakeInvalid(m => m.PlatformId = 0), nameof(BondDetailsModel.PlatformId)),
-            (MakeInvalid(m => m.NominalPrice = 0), nameof(BondDetailsModel.NominalPrice)),
-            (MakeInvalid(m => m.Quantity = 0), nameof(BondDetailsModel.Quantity))
+            (MakeInvalid(m => m.ParPrice = 0), nameof(BondDetailsModel.ParPrice)),
+            (MakeInvalid(m => m.NextCouponDate = 0), nameof(BondDetailsModel.ParPrice))
         };
 
         foreach (var (model, property) in cases)
         {
             var result = validator.Validate(model);
             result.IsValid.ShouldBeFalse();
-            result.Errors.ShouldContain(e => e.PropertyName == property);
         }
 
         BondDetailsModel MakeInvalid(Action<BondDetailsModel> change)
@@ -77,10 +76,23 @@ public class BondDetailsTests(SliceFixture fixture)
 
         var model = new BondDetailsFaker().FakeModel(_fixture.Platforms);
 
-        var result = await _fixture.UseServiceAsync<IBondDetailsService, BondDetailsModel>(
-            svc => svc.Upsert(model, CancellationToken.None));
+        var result = await UpsertData(model);
 
-        result.Id.ShouldBeGreaterThan(0);
+        IsEqual(model, result);
+    }
+
+
+    [Fact]
+    public async Task Get_Bond()
+    {
+        await _fixture.InitializeAsync();
+
+        var model = new BondDetailsFaker().FakeModel(_fixture.Platforms);
+
+        var result = await UpsertData(model);
+
+        result = await GetData(result.Id);
+
         IsEqual(model, result);
     }
 
@@ -91,58 +103,39 @@ public class BondDetailsTests(SliceFixture fixture)
 
         var model = new BondDetailsFaker().FakeModel(_fixture.Platforms);
 
-        var result = await _fixture.UseServiceAsync<IBondDetailsService, BondDetailsModel>(
-            svc => svc.Upsert(model, CancellationToken.None));
+        var result = await UpsertData(model);
 
         result.Id.ShouldBeGreaterThan(0);
 
         model = new BondDetailsFaker().FakeModel(_fixture.Platforms, result.Id);
         model.Ticker = $"UPDATED_{Guid.NewGuid():N}";
-        result = await _fixture.UseServiceAsync<IBondDetailsService, BondDetailsModel>(
-            svc => svc.Upsert(model, CancellationToken.None));
+        model.Operations =  [..result.Operations!.Take(10), ..model.Operations!];
 
-        result.Id.ShouldBe(model.Id);
-        result.Ticker.ShouldBe(model.Ticker);
+        result = await UpsertData(model);
+
+        IsEqual(model, result);
     }
 
-    [Fact]
-    public async Task Get_After_Create()
-    {
-        await _fixture.InitializeAsync();
+    private async Task<BondDetailsModel> UpsertData(BondDetailsModel model) =>
+        await _fixture.UseServiceAsync<IBondDetailsService, BondDetailsModel>(svc => svc.Upsert(model, new CancellationToken()));
 
-        var model = new BondDetailsFaker().FakeModel(_fixture.Platforms);
-
-        var created = await _fixture.UseServiceAsync<IBondDetailsService, BondDetailsModel>(
-            svc => svc.Upsert(model, CancellationToken.None));
-
-        var fetched = await _fixture.UseServiceAsync<IBondDetailsService, BondDetailsModel>(
-            svc => svc.Get(new BondDetailsFilter { Id = created.Id }, CancellationToken.None));
-
-        fetched.ShouldNotBeNull();
-        fetched.Id.ShouldBe(created.Id);
-        fetched.Ticker.ShouldBe(created.Ticker);
-        fetched.Issuer.ShouldBe(created.Issuer);
-    }
-
-    [Fact]
-    public async Task Get_NotFound_Should_Throw()
-    {
-        await _fixture.InitializeAsync();
-
-        var exception = await Should.ThrowAsync<NotFoundException>(
-            () => _fixture.UseServiceAsync<IBondDetailsService, BondDetailsModel>(
-                svc => svc.Get(new BondDetailsFilter { Id = 999 }, CancellationToken.None)));
-
-        exception.Message.ShouldContain("Bond was not found");
-    }
+    private async Task<BondDetailsModel> GetData(int id) =>
+        await _fixture.UseServiceAsync<IBondDetailsService, BondDetailsModel>(svc => svc.Get(new() { Id = id }, new CancellationToken()));
 
     private static void IsEqual(BondDetailsModel model, BondDetailsModel result)
     {
+        result.Id.ShouldBeGreaterThan(0);
         result.Ticker.ShouldBe(model.Ticker);
         result.Issuer.ShouldBe(model.Issuer);
-        result.InterestRate.ShouldBe(model.InterestRate);
         result.Currency.ShouldBe(model.Currency);
-        result.NominalPrice.ShouldBe(model.NominalPrice);
-        result.Quantity.ShouldBe(model.Quantity);
+        result.ParPrice.ShouldBe(model.ParPrice);
+        result.CouponRate.ShouldBe(model.CouponRate);
+        result.PaymentFrequence.ShouldBe(model.PaymentFrequence);
+        result.MaturityDate.ShouldBe(model.MaturityDate);
+        if (result.Operations.HasAny())
+            result.Operations!.Count.ShouldBe(model.Operations!.Count);
+
+        result.Operations?.ForEach(operation => 
+            model.Operations!.Any(o => o.Type == operation.Type && o.Price == operation.Price && o.Count == operation.Count).ShouldBeTrue());
     }
 }

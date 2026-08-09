@@ -36,11 +36,6 @@ public class FinanceInstrumentConfiguration : IEntityTypeConfiguration<FinanceIn
             .HasMaxLength(256)
             .IsRequired();
 
-        builder.Property(p => p.PurchaseDate)
-            .HasColumnName(@"PurchaseDate")
-            .HasColumnType("timestamp with time zone")
-            .IsRequired();
-
         builder.HasOne(p => p.Platform)
             .WithMany()
             .HasForeignKey(k => k.PlatformId)

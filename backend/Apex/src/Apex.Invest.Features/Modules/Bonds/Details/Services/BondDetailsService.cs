@@ -1,4 +1,4 @@
-using Apex.Invest.Domain.Entities;
+using Apex.Invest.Domain.Entities.Bond;
 using Apex.Invest.Factories;
 using Apex.Invest.Features.Modules.Bonds.Details.Filters;
 using Apex.Invest.Features.Modules.Bonds.Details.Mapper;
@@ -27,7 +27,7 @@ public class BondDetailsService(
     protected override async Task<Bond> UpsertData(EntitiesDbContext db, BondDetailsModel model, CancellationToken cancellationToken)
         => await db.Set<Bond>()
             .Upsert(model)
-            .OnKey(model.Id)
+            .OnKey(src => [src.Id])
             .CreateWhen(model => model.Id == 0)
             .ExecuteAsync((model, entity) => Mapper.MapData(model, entity), cancellationToken);
 }

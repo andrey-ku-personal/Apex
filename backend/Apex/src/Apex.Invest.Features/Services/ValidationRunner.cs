@@ -17,6 +17,6 @@ public class ValidationRunner(IServiceProvider sp) : IValidationRunner
 
         var result = await ((dynamic)validatorObj).ValidateAsync((dynamic)model, ct) as ValidationResult;
         if (result is not null && !result.IsValid)
-            throw new Apex.Shared.Core.Exceptions.ValidationException(string.Join("; ", result.Errors.Select(e => e.ErrorMessage)));
+            throw new Shared.Core.Exceptions.ValidationException(string.Join("; ", result.Errors.Select(e => e.ErrorMessage)));
     }
 }
