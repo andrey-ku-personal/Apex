@@ -8,14 +8,14 @@ public class BondDetailsModel
     public int PlatformId { get; set; }
     public string Ticker { get; set; } = default!;
     public string Issuer { get; set; } = default!;
-    public Status Status { get; set; }
 
     public Currency Currency { get; set; }
     public decimal ParPrice { get; set; }
     public decimal CouponRate { get; set; }
-    public PaymentFrequence PaymentFrequence { get; set; }
     public int NextCouponDate { get; set; }
     public DateTime MaturityDate { get; set; }
+    public PaymentFrequence PaymentFrequence { get; set; }
+    public Status Status { get; set; }
 
     public int TotalQuantity { get; set; }
     public decimal AveragePurchasePrice { get; set; }

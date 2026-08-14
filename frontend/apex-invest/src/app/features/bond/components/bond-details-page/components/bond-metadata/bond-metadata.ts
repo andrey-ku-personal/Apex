@@ -24,6 +24,7 @@ import { Frequencies } from '../../../../../../shared/options/frequency.options'
     FormText,
     FormSelect,
     FormNumber,
+    FormDate,
   ],
   templateUrl: './bond-metadata.html',
   styleUrl: './bond-metadata.scss',

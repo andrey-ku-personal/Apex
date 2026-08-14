@@ -1,6 +1,7 @@
 .block-card {
   padding: 0;
-  border-radius: 0.65rem;
+  border-radius: 12px;
+  background-color: #ffffff;
 }
 
 .operations-card-header {
@@ -15,13 +16,13 @@
   gap: 0.5rem;
   align-items: center;
 
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1;
-  margin: 0 0 0.5rem 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+  margin: 0;
 
   .card-title-icon {
-    color: #25a777;
+    color: #00a651;
     font-size: 1rem;
     line-height: 1rem;
     width: 1rem;
@@ -29,80 +30,47 @@
   }
 }
 
-.operations-count {
-  color: #676f6d;
-  font-size: 0.75rem;
+.operations-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1875rem 0.5rem;
+  border-radius: 6px;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
-.operations-summary {
-  display: grid;
+.operations-layout {
+  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 1rem 0;
-
-  .summary-state {
-    text-align: center;
-    padding: 0.625rem;
-    background-color: #f0f4f3b0;
-    border-radius: 0.5rem;
-
-    .summary-state-title {
-      color: #676f6d;
-      font-size: 0.75rem;
-      line-height: 1rem;
-      margin: 0;
-    }
-
-    .summary-state-value {
-      font-weight: 700;
-      font-size: 1.125rem;
-      line-height: 1.75rem;
-      margin: 0;
-    }
-
-    .summary-state-value-success {
-      color: #16a34a;
-    }
-
-    .summary-state-value-danger {
-      color: #dc2626;
-    }
-  }
+  margin-top: 1rem;
 }
 
-.operation-form-card {
-  background-color: #f0f4f366;
-  border: 1px solid #e3e9e7;
-  border-radius: 0.65rem;
-  overflow: hidden;
-  margin-bottom: 1rem;
+.operation-form-block {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
 }
 
-.operation-form-card-header {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e3e9e7;
-  background-color: #ffffff99;
-}
-
-.operation-form-card-title {
+.operation-form-block-title {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #1f2a27;
-  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.75rem;
 
   .mat-icon {
     width: 1rem;
     height: 1rem;
     font-size: 1rem;
-    color: #25a777;
+    color: #00a651;
   }
-}
-
-.operation-form-card-body {
-  padding: 1rem;
 }
 
 .operation-form {
@@ -131,37 +99,15 @@
   gap: 0.5rem;
 }
 
-.form-summary {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding-bottom: 0.25rem;
-
-  .form-summary-label {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #676f6d;
-    margin-bottom: 0.375rem;
-    display: block;
-  }
-
-  .form-summary-value {
-    font-size: 1.125rem;
-    font-weight: 700;
-    color: #1f2a27;
-    padding: 0.5rem 0.75rem;
-    background-color: #f0f4f366;
-    border: 1px solid #e3e9e7;
-    border-radius: 0.5rem;
-    display: block;
-  }
+.operations-table-block {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .operations-table {
-  margin-top: 0.5rem;
-  border: 1px solid #e3e9e7;
-  border-radius: 0.5rem;
-  overflow: hidden;
+  max-height: 340px;
+  overflow-y: auto;
 
   table {
     width: 100%;
@@ -169,72 +115,72 @@
 
   ::ng-deep {
     .mat-mdc-header-cell {
-      color: #676f6d;
+      color: #64748b;
       font-size: 0.6875rem;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 0.5rem 0.75rem;
-      border-bottom: 1px solid #e3e9e7;
+      letter-spacing: 0.04em;
+      padding: 0.625rem 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      background: #f1f5f9;
+      position: sticky;
+      top: 0;
+      z-index: 2;
     }
 
     .mat-mdc-cell {
       font-size: 0.8125rem;
-      padding: 0.625rem 0.75rem;
-      border-bottom: 1px solid #e3e9e7;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      color: #0f172a;
     }
 
     .mat-mdc-row {
-      transition: background-color 0.15s ease;
+      transition: background-color 0.1s ease;
+      cursor: pointer;
     }
 
     .mat-mdc-row:hover .mat-mdc-cell {
-      background-color: #f0f4f333;
+      background-color: #e9f9ef;
     }
 
-    .row-buy {
-      box-shadow: inset 3px 0 0 0 #16a34a;
-    }
-
-    .row-sell {
-      box-shadow: inset 3px 0 0 0 #dc2626;
+    .mat-mdc-row:last-child .mat-mdc-cell {
+      border-bottom: none;
     }
   }
 }
 
-.op-dot {
+.badge-dot {
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  margin-right: 6px;
-  vertical-align: middle;
-}
-
-.op-dot-buy {
-  background: #16a34a;
-}
-
-.op-dot-sell {
-  background: #dc2626;
+  background: currentColor;
 }
 
 .op-type {
-  font-size: 0.75rem;
-  font-weight: 500;
-  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1875rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 .op-type-buy {
+  background: #f0fdf4;
   color: #16a34a;
 }
 
 .op-type-sell {
-  color: #dc2626;
+  background: #fef2f2;
+  color: #ef4444;
 }
 
 .cell-sum-sell {
-  color: #dc2626;
+  color: #ef4444;
   font-weight: 600;
 }
 
@@ -243,14 +189,14 @@
   gap: 0.25rem;
 
   .mat-icon {
-    color: #676f6d;
+    color: #64748b;
     width: 1.125rem;
     height: 1.125rem;
     font-size: 1.125rem;
   }
 
   .btn-icon-danger .mat-icon {
-    color: #dc2626;
+    color: #ef4444;
   }
 }
 
@@ -266,11 +212,11 @@
     width: 2rem;
     height: 2rem;
     font-size: 2rem;
-    color: #676f6d80;
+    color: #94a3b8;
   }
 
   .empty-text {
-    color: #676f6d;
+    color: #64748b;
     font-size: 0.875rem;
     margin: 0.5rem 0 0;
   }

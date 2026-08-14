@@ -4,16 +4,32 @@
     <p>Данные выпуска — общие для всех покупок</p>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <app-bond-metadata />
-    <app-bond-status />
-    <app-bond-sell-buy-operations />
+  @if (loading()) {
+    <div class="loading-overlay">
+      <mat-progress-spinner mode="indeterminate" />
+    </div>
+  }
 
-    <div class="form-actions">
-      <button matButton="elevated" type="submit">
-        <mat-icon>save</mat-icon>
-        Сохранить
-      </button>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-layout">
+      <div class="form-main">
+        <app-bond-metadata />
+        <app-bond-sell-buy-operations />
+      </div>
+
+      <div class="form-aside">
+        <div class="submit-card">
+          <div class="submit-card-actions">
+            <button matButton="outlined" type="button" class="submit-btn" [disabled]="loading()">
+              Отмена
+            </button>
+            <button matButton="filled" type="submit" class="submit-btn" [disabled]="loading()">
+              <mat-icon>save</mat-icon>
+              Сохранить
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </form>
 </div>

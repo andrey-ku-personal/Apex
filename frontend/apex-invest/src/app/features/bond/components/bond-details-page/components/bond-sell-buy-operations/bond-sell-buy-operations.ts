@@ -19,6 +19,7 @@ import { FormSelect } from '../../../../../../shared/components/form/form-select
 import { FormDate } from '../../../../../../shared/components/form/form-date/form-date';
 import { FormNumber } from '../../../../../../shared/components/form/form-number/form-number';
 import { OperationTypes } from '../../../../../../shared/options/operation-type.options';
+import { FormText } from "../../../../../../shared/components/form/form-text-area/form-text-area";
 
 @Component({
   selector: 'app-bond-sell-buy-operations',
@@ -40,7 +41,8 @@ import { OperationTypes } from '../../../../../../shared/options/operation-type.
     FormSelect,
     FormNumber,
     FormDate,
-  ],
+    FormText
+],
   templateUrl: './bond-sell-buy-operations.html',
   styleUrl: './bond-sell-buy-operations.scss',
 })
@@ -53,6 +55,7 @@ export class BondSellBuyOperations {
     date: [null, [Validators.required]],
     price: [null, [Validators.required, Validators.min(0)]],
     count: [null, [Validators.required, Validators.min(1)]],
+    comment: [""]
   });
   protected readonly operationTypes = OperationTypes;
   protected readonly displayedColumns = ['type', 'date', 'price', 'count', 'sum', 'actions'];

@@ -3,25 +3,26 @@ aside {
   flex-direction: column;
   flex-shrink: 0;
   width: 16rem;
-  border-right: 1px solid #e3e8e6;
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8f0;
 
   .sidebar-logo {
     display: flex;
     align-items: center;
     gap: .5rem;
-    padding: 0 1.5rem 0 1.5rem ;
+    padding: 0 1.5rem 0 1.5rem;
     height: 4rem;
-    border-bottom: 1px solid #e3e8e6;
+    border-bottom: 1px solid #e2e8f0;
 
     .sidebar-logo-image {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: .5rem;
-      border-radius: .65rem;
+      border-radius: 8px;
       width: 2rem;
       height: 2rem;
-      background-color: #25a777;
+      background-color: #00a651;
       color: #ffffff;
     }
 
@@ -30,6 +31,7 @@ aside {
       line-height: 2.75rem;
       font-weight: 700;
       letter-spacing: -0.025em;
+      color: #0f172a;
     }
   }
 
@@ -42,11 +44,11 @@ aside {
     gap: .25rem;
 
     .sidebar-navigation-title {
-      color: rgba(26, 36, 33, 0.4);
+      color: #94a3b8;
       letter-spacing: .05rem;
       text-transform: uppercase;
-      font-size: .75rem;
-      font-weight: 600;
+      font-size: .6875rem;
+      font-weight: 700;
       padding: .75rem .75rem .5rem;
       margin: 0;
 
@@ -59,10 +61,10 @@ aside {
   .sidebar-nav-link {
     display: flex;
     align-items: center;
-    gap: .75rem;
-    padding: .625rem .875rem;
-    border-radius: .5rem;
-    color: rgba(26, 36, 33, 0.65);
+    gap: .625rem;
+    padding: .5rem .75rem;
+    border-radius: 8px;
+    color: #64748b;
     font-size: .875rem;
     font-weight: 500;
     cursor: pointer;
@@ -78,17 +80,18 @@ aside {
     }
 
     &:hover {
-      background-color: #f0f9f4;
-      color: #1a2421;
+      background-color: #f8faf9;
+      color: #0f172a;
     }
 
     &.active {
-      background-color: rgba(37, 167, 119, 0.12);
-      color: #25a777;
+      background-color: #00a651;
+      color: #ffffff;
       font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 166, 81, 0.25);
 
       .sidebar-icon {
-        color: #25a777;
+        color: #ffffff;
       }
     }
   }
@@ -96,19 +99,19 @@ aside {
   .sidebar-user {
     flex-shrink: 0;
     padding: .75rem;
-    border-top: 1px solid #e3e8e6;
+    border-top: 1px solid #e2e8f0;
 
     .sidebar-user-card {
       display: flex;
       align-items: center;
       gap: .75rem;
       padding: .5rem;
-      border-radius: .5rem;
+      border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.15s ease;
 
       &:hover {
-        background-color: #f0f9f4;
+        background-color: #f8faf9;
       }
     }
 
@@ -119,10 +122,10 @@ aside {
       width: 2.25rem;
       height: 2.25rem;
       border-radius: 50%;
-      background: linear-gradient(135deg, #25a777, #4ade80);
+      background-color: #ffc107;
       color: #ffffff;
-      font-size: .75rem;
-      font-weight: 600;
+      font-size: .6875rem;
+      font-weight: 700;
       flex-shrink: 0;
     }
 
@@ -134,6 +137,7 @@ aside {
         font-size: .875rem;
         font-weight: 500;
         margin: 0;
+        color: #0f172a;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -141,7 +145,7 @@ aside {
 
       .sidebar-user-email {
         font-size: .75rem;
-        color: rgba(26, 36, 33, 0.5);
+        color: #64748b;
         margin: 0;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -151,9 +155,7 @@ aside {
 
     svg {
       flex-shrink: 0;
-      color: rgba(26, 36, 33, 0.5);
+      color: #64748b;
     }
   }
 }
-
-
