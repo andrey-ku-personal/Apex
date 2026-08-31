@@ -10,14 +10,14 @@ import { FormControlAbstract } from '../abstract/form-control.abstract';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormText),
+      useExisting: forwardRef(() => FormTextArea),
       multi: true,
     },
   ],
   templateUrl: './form-text-area.html',
   styleUrl: './form-text-area.scss',
 })
-export class FormText extends FormControlAbstract<string> {
+export class FormTextArea extends FormControlAbstract<string> {
   public readonly label = input<string>('');
   public readonly placeholder = input<string>('');
   public readonly isRequired = input<boolean>(false);

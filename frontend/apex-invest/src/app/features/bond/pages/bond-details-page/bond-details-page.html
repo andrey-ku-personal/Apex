@@ -1,0 +1,38 @@
+<div class="bond-details">
+  <div class="title-block">
+    <h2>Новая Облигация</h2>
+    <p>Данные выпуска — общие для всех покупок</p>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-overlay">
+      <mat-progress-spinner mode="indeterminate" />
+    </div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-layout">
+      <div class="form-main">
+        <app-bond-metadata />
+        <app-bond-sell-buy-operations />
+      </div>
+
+      <div class="form-aside">
+        <app-bond-summary />
+
+
+        <!-- <div class="submit-card">
+          <div class="submit-card-actions">
+            <button matButton="outlined" type="button" class="submit-btn" [disabled]="loading()">
+              Отмена
+            </button>
+            <button matButton="filled" type="submit" class="submit-btn" [disabled]="loading()">
+              <mat-icon>save</mat-icon>
+              Сохранить
+            </button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </form>
+</div>
