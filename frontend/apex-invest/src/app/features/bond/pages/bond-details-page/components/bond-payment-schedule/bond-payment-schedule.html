@@ -1,0 +1,52 @@
+<app-card icon="event" title="График выплат">
+  <span cardHeaderTrailing class="schedule-badge">расчётный</span>
+
+  @if (payments().length > 0) {
+    <div class="schedule-table-wrap">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th class="num">№</th>
+            <th>Дата</th>
+            <th class="amount">Сумма</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (payment of payments(); track payment.number) {
+            <tr>
+              <td class="num">{{ payment.number }}</td>
+              <td class="mono">{{ formatDate(payment.date) }}</td>
+              <td class="amount mono">
+                {{ formatAmount(payment.amount) }} {{ formValue()?.currency }}
+              </td>
+              <td>
+                <span
+                  class="status-badge"
+                  [class.received]="payment.received"
+                  [class.expected]="!payment.received"
+                >
+                  {{ payment.received ? 'Получен' : 'Ожидается' }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="schedule-footer">
+      <span>Всего: <b class="mono">{{ payments().length }}</b></span>
+      <span>Получено: <b class="mono ok">{{ formatAmount(receivedSum()) }}</b></span>
+      <span>Ожидается: <b class="mono wait">{{ formatAmount(upcomingSum()) }}</b></span>
+    </div>
+  } @else {
+    <p class="schedule-empty">
+      @if (hasPurchases()) {
+        Заполните номинал, ставку, день выплат и дату погашения
+      } @else {
+        Добавьте покупку — график построится от её даты
+      }
+    </p>
+  }
+</app-card>

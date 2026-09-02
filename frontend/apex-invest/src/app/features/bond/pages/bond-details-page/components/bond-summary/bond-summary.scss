@@ -1,0 +1,19 @@
+.summary-block {
+  font-size: 0.8rem;
+
+  .summary-info {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.625rem;
+
+    .label {
+      color: #94A3B8;
+    }
+
+    .value {
+      color: #0F172A;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-feature-settings: "tnum";
+    }
+  }
+}

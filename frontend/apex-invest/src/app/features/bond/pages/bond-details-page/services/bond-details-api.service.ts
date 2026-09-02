@@ -11,7 +11,11 @@ export class BondDetailsApiService {
     return this.http.get<BondDetails>(`/Bond/Details/${id}`);
   }
 
-  upsert(data: BondDetails): Observable<BondDetails> {
-    return this.http.put<BondDetails>('/Bond/Details/Upsert', data);
+  create(data: BondDetails): Observable<BondDetails> {
+    return this.http.post<BondDetails>('/Bond/Details', data);
+  }
+
+  update(data: BondDetails): Observable<BondDetails> {
+    return this.http.put<BondDetails>(`/Bond/Details/${data.id}`, data);
   }
 }

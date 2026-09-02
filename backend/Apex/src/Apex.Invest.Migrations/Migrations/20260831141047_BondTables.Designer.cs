@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Apex.Invest.Migrations.Migrations
 {
     [DbContext(typeof(EntitiesDbContext))]
-    [Migration("20260807174101_BondTable")]
-    partial class BondTable
+    [Migration("20260831141047_BondTables")]
+    partial class BondTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

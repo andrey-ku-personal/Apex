@@ -1,5 +1,5 @@
 ﻿import { Component, forwardRef, input } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormControlAbstract } from '../abstract/form-control.abstract';
@@ -7,7 +7,7 @@ import { OptionModel } from '../../../models/option.model';
 
 @Component({
   selector: 'app-form-select',
-  imports: [MatFormFieldModule, MatSelectModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatSelectModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -23,10 +23,4 @@ export class FormSelect extends FormControlAbstract<string> {
   public readonly placeholder = input<string>('');
   public readonly isRequired = input<boolean>(false);
   public readonly options = input<OptionModel[]>([]);
-
-  protected onSelect(value: string): void {
-    this.value = value;
-    this.onChange(value);
-    this.onTouch();
-  }
 }

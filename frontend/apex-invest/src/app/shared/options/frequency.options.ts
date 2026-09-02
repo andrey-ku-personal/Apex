@@ -7,3 +7,10 @@ export const Frequencies: OptionModel[] = [
   { value: 'annual', label: 'Ежегодно' },
   { value: 'end', label: 'В конце срока' }
 ]
+
+export const FrequencySteps: Record<string, number> = {
+  monthly: 1,
+  quarterly: 3,
+  semiannual: 6,
+  annual: 12,
+};

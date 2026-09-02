@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormArray, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { BondDetails } from '../models/bond-details.model';
 import { BondDetailsOperation } from '../models/bond-details-operations';
 import { BondFormGroup } from '../form-groups/bond-form-group';
@@ -19,16 +19,18 @@ export class BondFormFactory {
       parPrice: [bond?.parPrice ?? 0, [Validators.required, Validators.min(0)]],
       couponRate: [bond?.couponRate ?? 0, [Validators.required, Validators.min(0)]],
       paymentFrequency: [bond?.paymentFrequency ?? '', [Validators.required]],
-      nextCouponDate: [bond?.nextCouponDate ?? 0],
+      nextCouponDate: [bond?.nextCouponDate ?? 0, [Validators.required, Validators.min(1), Validators.max(31)]],
       maturityDate: [bond?.maturityDate ?? '', [Validators.required]],
       status: [bond?.status ?? 'active', [Validators.required]],
-      operations: this.fb.array(
-        (bond?.operations ?? []).map((op) => this.createOperationGroup(op)),
-      ),
+      operations: this.createOperationsArray(bond?.operations)
     });
   }
 
-  createOperationGroup(op?: Partial<BondDetailsOperation>): OperationFormGroup {
+  public createOperationsArray(ops?: Partial<BondDetailsOperation>[]): FormArray<OperationFormGroup> {
+    return this.fb.array((ops ?? []).map((op) => this.createOperationGroup(op)));
+  }
+
+  public createOperationGroup(op?: Partial<BondDetailsOperation>): OperationFormGroup {
     return this.fb.group({
       type: this.fb.control(op?.type ?? 'buy', [Validators.required]),
       platformId: this.fb.control(op?.platformId ?? 1, [Validators.required]),

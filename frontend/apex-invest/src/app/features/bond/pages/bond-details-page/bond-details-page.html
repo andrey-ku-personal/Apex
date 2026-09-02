@@ -18,10 +18,10 @@
       </div>
 
       <div class="form-aside">
-        <app-bond-summary />
+        <app-bond-summary [form]="form" />
+        <app-bond-payment-schedule [form]="form" />
 
-
-        <!-- <div class="submit-card">
+        <div class="submit-card">
           <div class="submit-card-actions">
             <button matButton="outlined" type="button" class="submit-btn" [disabled]="loading()">
               Отмена
@@ -31,7 +31,7 @@
               Сохранить
             </button>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </form>

@@ -1,6 +1,6 @@
 <app-card icon="history" title="История операций">
   <span cardHeaderTrailing class="operations-badge">
-    {{ operations().length }} {{ operationsCountLabel(operations().length) }}
+    {{ operations.length }} {{ operationsCountLabel(operations.length) }}
   </span>
 
   <div class="operation-wrapper">
@@ -44,7 +44,7 @@
   </div>
 
   <div class="operations-table-wrapper">
-    @if (operations().length > 0) {
+    @if (operations.length > 0) {
       <div class="operations-table" formArrayName="operations">
         <table mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="type">

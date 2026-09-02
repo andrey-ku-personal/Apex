@@ -1,5 +1,5 @@
 import { Directive, Injector, inject } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 
 @Directive()
 export abstract class FormControlAbstract<V> implements ControlValueAccessor {
@@ -10,8 +10,8 @@ export abstract class FormControlAbstract<V> implements ControlValueAccessor {
 
   protected ngControl: NgControl = null!;
 
-  get control() {
-    return this.ngControl?.control;
+  get control(): FormControl {
+    return this.ngControl?.control as FormControl;
   }
 
   get invalid(): boolean {

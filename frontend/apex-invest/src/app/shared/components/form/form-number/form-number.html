@@ -3,12 +3,9 @@
   <input
     matInput
     type="number"
+    [formControl]="control"
     [step]="step()"
-    [value]="value ?? ''"
     [placeholder]="placeholder()"
-    [disabled]="disabled"
-    (input)="onInput($event)"
-    (blur)="onTouch()"
   />
   @if (errorMessage) {
     <mat-error>{{ errorMessage }}</mat-error>

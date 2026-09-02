@@ -2,12 +2,11 @@
   <mat-label>{{ label() }}{{ isRequired() ? ' *' : '' }}</mat-label>
   <input
     matInput
+    [formControl]="internal"
     [matDatepicker]="picker"
-    [value]="value"
     [placeholder]="placeholder()"
-    [disabled]="disabled"
-    (dateInput)="onSelect($event.value)"
-    (blur)="onTouch()"
+    (dateChange)="onDateChange()"
+    (dateInput)="onDateChange()"
   />
   <mat-datepicker-toggle matIconSuffix [for]="picker" />
   <mat-datepicker #picker />

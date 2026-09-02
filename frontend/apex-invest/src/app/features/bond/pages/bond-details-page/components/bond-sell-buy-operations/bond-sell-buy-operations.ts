@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import {
   FormGroup,
@@ -61,13 +61,19 @@ export class BondSellBuyOperations {
   protected readonly dataSource = new MatTableDataSource<FormGroup>([]);
   protected readonly selectedIndex = signal<number | null>(null);
 
-  protected operations = computed(() => this.parentForm.control.get('operations') as FormArray);
+  protected get operations(): FormArray {
+    return this.parentForm.control.get('operations') as FormArray;
+  }
+
+  constructor() {
+    this.parentForm.control.valueChanges.subscribe(() => this.syncDataSource());
+  }
 
   protected operationsCountLabel(count: number): string {
     return pluralize(count, ['операция', 'операции', 'операций']);
   }
 
-  onUpdateOperation() {
+  protected onUpdateOperation(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -75,9 +81,8 @@ export class BondSellBuyOperations {
 
     const value = this.form.getRawValue();
 
-    (this.operations().at(this.selectedIndex()!) as FormGroup).patchValue(value);
+    (this.operations.at(this.selectedIndex()!) as FormGroup).patchValue(value);
 
-    this.syncDataSource();
     this.resetForm();
   }
 
@@ -89,20 +94,19 @@ export class BondSellBuyOperations {
 
     const row = this.formFactory.createOperationGroup(this.form.getRawValue());
 
-    this.operations().push(row);
+    this.operations.push(row);
 
-    this.syncDataSource();
     this.resetForm();
   }
 
   protected editOperation(index: number): void {
-    const group = this.operations().at(index) as FormGroup;
+    const group = this.operations.at(index) as FormGroup;
     this.form.patchValue(group.getRawValue());
     this.selectedIndex.set(index);
   }
 
   protected removeOperation(index: number): void {
-    this.operations().removeAt(index);
+    this.operations.removeAt(index);
 
     const selected = this.selectedIndex();
     if (selected !== null) {
@@ -112,8 +116,6 @@ export class BondSellBuyOperations {
         this.selectedIndex.set(selected - 1);
       }
     }
-
-    this.syncDataSource();
   }
 
   protected cancelEdit(): void {
@@ -126,6 +128,6 @@ export class BondSellBuyOperations {
   }
 
   private syncDataSource(): void {
-    this.dataSource.data = [...this.operations().controls] as FormGroup[];
+    this.dataSource.data = [...this.operations.controls] as FormGroup[];
   }
 }

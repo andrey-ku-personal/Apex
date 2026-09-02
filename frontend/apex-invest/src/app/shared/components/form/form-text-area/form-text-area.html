@@ -3,12 +3,9 @@
   <textarea
     matInput
     [rows]="rows()"
-    [value]="value || ''"
+    [formControl]="control"
     [placeholder]="placeholder()"
-    [disabled]="disabled"
-    (input)="onInput($event)"
-    (blur)="onTouch()">
-  </textarea>
+  ></textarea>
 
   @if (errorMessage) {
     <mat-error>{{ errorMessage }}</mat-error>

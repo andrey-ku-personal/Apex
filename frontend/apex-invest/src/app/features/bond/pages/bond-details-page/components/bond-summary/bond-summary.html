@@ -1,3 +1,37 @@
-<app-card icon="description" title="Данные выпуска">
-  <p>a</p>
+<app-card icon="trending_up" title="Сводка">
+  <div class="summary-block">
+    <div class="summary-info">
+      <span class="label">Номинал</span>
+      <span class="value">{{ formValue()?.parPrice ?? '—' }} {{ formValue()?.currency }}</span>
+    </div>
+
+    <div class="summary-info">
+      <span class="label">Количество</span>
+      <span class="value">{{ positionCount() }}</span>
+    </div>
+
+    <div class="summary-info">
+      <span class="label">Ставка, %</span>
+      <span class="value">{{ formValue()?.couponRate ?? '—' }}</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="summary-info">
+      <span class="label">Сумма покупок</span>
+      <span class="value">{{ totalBuySum() }} {{ formValue()?.currency }}</span>
+    </div>
+
+    <div class="summary-info">
+      <span class="label">Переплата</span>
+      <span class="value">{{ overpay() ?? '—' }} {{ formValue()?.currency }}</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="summary-info">
+      <span class="label">Следующая выплата</span>
+      <span class="value">{{ nextPaymentLabel() }}</span>
+    </div>
+  </div>
 </app-card>

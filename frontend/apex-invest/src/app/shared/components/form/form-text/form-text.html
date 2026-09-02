@@ -3,11 +3,8 @@
   <input
     matInput
     type="text"
-    [value]="value || ''"
+    [formControl]="control"
     [placeholder]="placeholder()"
-    [disabled]="disabled"
-    (input)="onInput($event)"
-    (blur)="onTouch()"
   />
   @if (errorMessage) {
     <mat-error>{{ errorMessage }}</mat-error>

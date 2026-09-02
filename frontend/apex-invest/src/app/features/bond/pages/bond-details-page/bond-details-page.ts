@@ -12,6 +12,7 @@ import { BondDetails } from './models/bond-details.model';
 import { BondDetailsApiService } from './services/bond-details-api.service';
 import { BondSellBuyOperations } from './components/bond-sell-buy-operations/bond-sell-buy-operations';
 import { BondSummary } from './components/bond-summary/bond-summary';
+import { BondPaymentSchedule } from './components/bond-payment-schedule/bond-payment-schedule';
 import { BondFormFactory } from './services/bond-form.factory';
 
 @Component({
@@ -23,7 +24,8 @@ import { BondFormFactory } from './services/bond-form.factory';
     MatProgressSpinnerModule,
     BondMetadata,
     BondSellBuyOperations,
-    BondSummary
+    BondSummary,
+    BondPaymentSchedule
   ],
   providers: [BondDetailsApiService],
   templateUrl: './bond-details-page.html',
@@ -55,22 +57,34 @@ export class BondDetailsPage {
     effect(() => {
       const data = this.bondResource.value();
       if (data) {
-        this.form = this.formFactory.createBondForm(data);
+        const { operations, ...rest } = data;
+        this.form.patchValue(rest);
+
+        const array = this.form.controls.operations;
+        array.clear();
+        for (const operation of operations) {
+          array.push(this.formFactory.createOperationGroup(operation));
+        }
       }
     });
   }
 
   protected async onSubmit(): Promise<void> {
-    if (this.form.valid) {
-      this.isLoading.set(true);
-      try {
-        const result = await firstValueFrom(this.apiService.upsert(this.form.getRawValue()));
-        this.router.navigate(['/bond', result.id]);
-      } catch (err) {
-        console.error('Save failed:', err);
-      } finally {
-        this.isLoading.set(false);
-      }
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.isLoading.set(true);
+    try {
+      const raw = this.form.getRawValue();
+      const request = raw.id > 0 ? this.apiService.update(raw) : this.apiService.create(raw);
+      const result = await firstValueFrom(request);
+      this.router.navigate(['/bond', result.id]);
+    } catch (err) {
+      console.error('Save failed:', err);
+    } finally {
+      this.isLoading.set(false);
     }
   }
 }
