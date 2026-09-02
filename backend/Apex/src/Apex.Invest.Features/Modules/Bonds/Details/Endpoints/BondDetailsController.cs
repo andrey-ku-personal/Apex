@@ -9,14 +9,14 @@ namespace Apex.Invest.Features.Modules.Bonds.Details.Endpoints;
 
 public class BondDetailsController(IBondDetailsService service) : SharedController
 {
-    [HttpPut("Bond/Details/Upsert")]
+    [HttpPost("Bond/Details")]
     [OpenApiOperation(
-        operationId: "Bond.Upsert",
-        summary: "Upsert Bond",
-        description: "Upsert Bond")
+        operationId: "Bond.Save",
+        summary: "Save Bond",
+        description: "Save Bond")
     ]
     [OpenApiTags("Bond")]
-    public async Task<BondDetailsModel> Upsert([FromBody] BondDetailsModel model, CancellationToken cancellationToken = default)
+    public async Task<BondDetailsModel> Save([FromBody] BondDetailsModel model, CancellationToken cancellationToken = default)
         => await service.Upsert(model, cancellationToken);
 
     [HttpGet("Bond/Details/{id:int}")]

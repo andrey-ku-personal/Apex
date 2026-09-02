@@ -16,6 +16,7 @@ export class BondDetailsApiService {
   }
 
   update(data: BondDetails): Observable<BondDetails> {
-    return this.http.put<BondDetails>(`/Bond/Details/${data.id}`, data);
+    const { id, ...body } = data;
+    return this.http.put<BondDetails>(`/Bond/Details/${id}`, body);
   }
 }
