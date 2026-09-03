@@ -13,7 +13,7 @@ public class BondDetailsModelValidator : AbstractValidator<BondDetailsModel>
         RuleFor(x => x.PaymentFrequence).IsInEnum();
         RuleFor(x => x.ParPrice).GreaterThan(0);
         RuleFor(x => x.CouponRate).GreaterThanOrEqualTo(0);
-        RuleFor(x => x.MaturityDate).GreaterThan(DateTime.MinValue);
+        RuleFor(x => x.MaturityDate).GreaterThan(DateOnly.MinValue);
         RuleFor(x => x.NextCouponDate).GreaterThan(0);
     }
 }
