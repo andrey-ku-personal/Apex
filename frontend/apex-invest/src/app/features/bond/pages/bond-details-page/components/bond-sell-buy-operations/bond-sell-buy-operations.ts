@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import {
   FormGroup,
@@ -66,8 +66,19 @@ export class BondSellBuyOperations {
   }
 
   constructor() {
-    this.parentForm.control.valueChanges.subscribe(() => this.syncDataSource());
+    effect((onCleanup) => {
+      const parentControl = this.parentForm.control;
+      if (!parentControl) {
+        return;
+      }
+
+      this.syncDataSource();
+
+      const sub = parentControl.valueChanges.subscribe(() => this.syncDataSource());
+      onCleanup(() => sub.unsubscribe());
+    });
   }
+
 
   protected operationsCountLabel(count: number): string {
     return pluralize(count, ['операция', 'операции', 'операций']);

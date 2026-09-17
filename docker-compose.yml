@@ -1,0 +1,40 @@
+services:
+  apex.invest.db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: Apex.Invest
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    ports:
+      - "5432:5432"
+    volumes:
+      - apex.invest.pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d Apex.Invest"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  apex.invest.backend:
+    build:
+      context: .
+      dockerfile: backend/Apex/src/Apex.Invest.Api/Dockerfile
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=apex.invest.db;Port=5432;Database=Apex.Invest;Username=postgres;Password=12345"
+    ports:
+      - "8080:8080"
+    depends_on:
+      apex.invest.db:
+        condition: service_healthy
+
+  apex.invest.frontend:
+    build:
+      context: ./frontend/apex-invest
+      dockerfile: Dockerfile
+    ports:
+      - "8090:80"
+    depends_on:
+      - apex.invest.backend
+
+volumes:
+  apex.invest.pgdata:
