@@ -1,5 +1,5 @@
 using Apex.Shared.Core.Pagination.Abstract;
-using Apex.Shared.Core.Pagination.Models;
+using Apex.Shared.Models.Pagination;
 
 namespace Apex.Invest.Abstracts.List;
 

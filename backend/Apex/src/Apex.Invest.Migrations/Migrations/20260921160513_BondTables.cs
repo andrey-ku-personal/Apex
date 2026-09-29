@@ -59,7 +59,7 @@ namespace Apex.Invest.Migrations.Migrations
                     CouponRate = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false),
                     PaymentFrequence = table.Column<int>(type: "integer", nullable: false),
                     NextCouponDate = table.Column<int>(type: "integer", nullable: false),
-                    MaturityDate = table.Column<DateTime>(type: "date", nullable: false)
+                    MaturityDate = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +80,7 @@ namespace Apex.Invest.Migrations.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BondId = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
                     Price = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
                     Count = table.Column<int>(type: "integer", nullable: false)
                 },

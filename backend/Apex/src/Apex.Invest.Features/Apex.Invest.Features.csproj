@@ -10,6 +10,7 @@
     <ProjectReference Include="..\Apex.Invest.Domain\Apex.Invest.Domain.csproj" />
     <ProjectReference Include="..\Apex.Invest.Persistance\Apex.Invest.Persistance.csproj" />
     <ProjectReference Include="..\Apex.Invest\Apex.Shared.Core\Apex.Shared.Core.csproj" />
+    <ProjectReference Include="..\Apex.Shared.Models\Apex.Shared.Models.csproj" />
   </ItemGroup>
 
 </Project>

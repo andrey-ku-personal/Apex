@@ -2,7 +2,7 @@ using Apex.Invest.Abstracts.List;
 using Apex.Invest.Persistance;
 using Apex.Shared.Core.Pagination.Abstract;
 using Apex.Shared.Core.Pagination.Expressions;
-using Apex.Shared.Core.Pagination.Models;
+using Apex.Shared.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 
 namespace Apex.Invest.Modules;

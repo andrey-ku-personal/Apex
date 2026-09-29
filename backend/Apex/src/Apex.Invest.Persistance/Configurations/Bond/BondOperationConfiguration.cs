@@ -26,7 +26,7 @@ public class BondOperationConfiguration : IEntityTypeConfiguration<Domain.Entiti
 
         builder.Property(p => p.Date)
             .HasColumnName("Date")
-            .HasColumnType("timestamp with time zone")
+            .HasColumnType("date")
             .IsRequired();
 
         builder.Property(p => p.Price)

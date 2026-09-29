@@ -2,7 +2,7 @@ using Apex.Invest.Features.Modules.Bonds.List.Filters;
 using Apex.Invest.Features.Modules.Bonds.List.Models;
 using Apex.Invest.Features.Modules.Bonds.List.Services;
 using Apex.Shared.Core.Controllers;
-using Apex.Shared.Core.Pagination.Models;
+using Apex.Shared.Models.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 

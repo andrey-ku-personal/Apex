@@ -1,4 +1,4 @@
-﻿namespace Apex.Shared.Core.Pagination.Models;
+namespace Apex.Shared.Models.Pagination;
 
 public class PageDataResponse<TData>
     where TData : class
@@ -13,7 +13,7 @@ public class PageDataResponse<TData>
         Data = data;
     }
 
-    public int TotalCount { get; set; }
+    public int TotalCount { get; }
 
-    public List<TData> Data { get; set; } = default!;
+    public List<TData> Data { get; } = default!;
 }

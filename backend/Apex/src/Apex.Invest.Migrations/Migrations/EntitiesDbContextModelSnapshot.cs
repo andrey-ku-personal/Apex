@@ -42,8 +42,8 @@ namespace Apex.Invest.Migrations.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("Count");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date")
                         .HasColumnName("Date");
 
                     b.Property<decimal>("Price")
@@ -156,7 +156,7 @@ namespace Apex.Invest.Migrations.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("Currency");
 
-                    b.Property<DateTime>("MaturityDate")
+                    b.Property<DateOnly>("MaturityDate")
                         .HasColumnType("date")
                         .HasColumnName("MaturityDate");
 

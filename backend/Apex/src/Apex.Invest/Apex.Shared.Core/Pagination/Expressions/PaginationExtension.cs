@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Apex.Shared.Core.Pagination.Models;
+using Apex.Shared.Models.Pagination;
 
 namespace Apex.Shared.Core.Pagination.Expressions;
 

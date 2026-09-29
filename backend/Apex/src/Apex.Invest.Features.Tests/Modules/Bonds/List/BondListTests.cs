@@ -1,10 +1,11 @@
+using Apex.Invest.Domain.Enums;
 using Apex.Invest.Features.Modules.Bonds.Details.Models;
 using Apex.Invest.Features.Modules.Bonds.Details.Services;
 using Apex.Invest.Features.Modules.Bonds.List.Filters;
 using Apex.Invest.Features.Modules.Bonds.List.Models;
 using Apex.Invest.Features.Modules.Bonds.List.Services;
 using Apex.Invest.Features.Tests.Modules.Bonds.Details.Fakers;
-using Apex.Shared.Core.Pagination.Models;
+using Apex.Shared.Models.Pagination;
 using Shouldly;
 
 namespace Apex.Invest.Features.Tests.Modules.Bonds.List;
@@ -162,6 +163,32 @@ public class BondListTests(SliceFixture fixture)
         result.Data.Count.ShouldBe(1);
         result.Data[0].Id.ShouldBeGreaterThan(0);
         result.Data[0].Ticker.ShouldNotBeNullOrEmpty();
+    }
+
+    [Fact]
+    public async Task Get_List_Passes_Operations_And_CouponRate()
+    {
+        await _fixture.InitializeAsync();
+
+        var model = new BondDetailsFaker().FakeModel(_fixture.Platforms);
+        model.Operations =
+        [
+            new BondOperationModel { Type = OperationType.Buy, Date = new DateOnly(2025, 1, 10), Price = 1000m, Count = 100 },
+            new BondOperationModel { Type = OperationType.Buy, Date = new DateOnly(2025, 3, 15), Price = 1020m, Count = 50 },
+            new BondOperationModel { Type = OperationType.Sell, Date = new DateOnly(2025, 4, 20), Price = 1010m, Count = 30 },
+        ];
+
+        var created = await _fixture.UseServiceAsync<IBondDetailsService, BondDetailsModel>(
+            svc => svc.Upsert(model, CancellationToken.None));
+
+        var result = await _fixture.UseServiceAsync<IBondListService, PageDataResponse<BondListModel>>(
+            svc => svc.GetList(new BondListFilter { PageSize = 10 }, CancellationToken.None));
+
+        var item = result.Data.Single(d => d.Id == created.Id);
+        item.ShouldNotBeNull();
+        item.CouponRate.ShouldBe(model.CouponRate);
+        item.Operations.ShouldNotBeNull();
+        item.Operations.Count.ShouldBe(3);
     }
 
     private async Task<List<BondDetailsModel>> SeedBondsAsync(int count)

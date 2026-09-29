@@ -2,6 +2,7 @@ using Apex.Invest.Factories;
 using Apex.Invest.Features.Modules.Bonds.Details.Mapper;
 using Apex.Invest.Features.Modules.Bonds.Details.Services;
 using Apex.Invest.Features.Modules.Bonds.List.Mapper;
+using Apex.Invest.Features.Modules.Bonds.List.Services;
 using Apex.Invest.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,5 +32,8 @@ public static class InjectionExtension
             var validator = sp.GetRequiredService<IValidationRunner>();
             return new BondDetailsDecorator(service, validator);
         });
+
+        services.AddScoped<BondListService>();
+        services.AddScoped<IBondListService>(sp => sp.GetRequiredService<BondListService>());
     }
 }
