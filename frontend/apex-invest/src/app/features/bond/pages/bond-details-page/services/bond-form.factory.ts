@@ -18,6 +18,7 @@ export class BondFormFactory {
       currency: [bond?.currency ?? 'BYN', [Validators.required]],
       parPrice: [bond?.parPrice ?? 0, [Validators.required, Validators.min(0)]],
       couponRate: [bond?.couponRate ?? 0, [Validators.required, Validators.min(0)]],
+      refinancingRate: [bond?.refinancingRate ?? false],
       paymentFrequency: [bond?.paymentFrequency ?? '', [Validators.required]],
       nextCouponDate: [bond?.nextCouponDate ?? 0, [Validators.required, Validators.min(1), Validators.max(31)]],
       maturityDate: [bond?.maturityDate ?? '', [Validators.required]],

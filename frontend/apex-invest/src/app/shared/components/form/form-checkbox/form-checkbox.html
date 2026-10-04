@@ -1,0 +1,12 @@
+@if (label()) {
+  <span class="checkbox-label">{{ label() }}</span>
+}
+<div class="checkbox-field" [class.checkbox-field-checked]="control?.value">
+  <mat-checkbox [formControl]="control">{{ text() }}</mat-checkbox>
+  @if (note()) {
+    <span class="checkbox-note">{{ note() }}</span>
+  }
+</div>
+@if (errorMessage) {
+  <div class="checkbox-error">{{ errorMessage }}</div>
+}

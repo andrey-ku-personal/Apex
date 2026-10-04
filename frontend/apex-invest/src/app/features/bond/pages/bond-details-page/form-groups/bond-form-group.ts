@@ -9,6 +9,7 @@ export type BondFormGroup = FormGroup<{
   currency: FormControl<string>;
   parPrice: FormControl<number>;
   couponRate: FormControl<number>;
+  refinancingRate: FormControl<boolean>;
   paymentFrequency: FormControl<string>;
   nextCouponDate: FormControl<number>;
   maturityDate: FormControl<string>;

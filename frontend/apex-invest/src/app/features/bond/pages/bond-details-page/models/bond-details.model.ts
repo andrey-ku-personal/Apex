@@ -8,6 +8,7 @@ export interface BondDetails {
   currency: string;
   parPrice: number;
   couponRate: number;
+  refinancingRate?: boolean;
   paymentFrequency: string;
   nextCouponDate: number;
   maturityDate: string;

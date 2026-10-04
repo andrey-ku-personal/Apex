@@ -9,5 +9,12 @@
     <app-form-number label="День выплаты" placeholder="15" formControlName="nextCouponDate" [step]="1" [isRequired]="true"/>
     <app-form-date label="Дата погашения" formControlName="maturityDate" [isRequired]="true"/>
     <app-form-select label="Частота" formControlName="paymentFrequency" [isRequired]="true" [options]="frequencies"/>
+    <app-form-checkbox
+      class="span-full"
+      label="Привязка к ставке"
+      text="Зависит от ставки рефинансирования"
+      note="купон = СР ЦБ + надбавка · пересчёт при изменении ставки"
+      formControlName="refinancingRate"
+    />
   </div>
 </app-card>

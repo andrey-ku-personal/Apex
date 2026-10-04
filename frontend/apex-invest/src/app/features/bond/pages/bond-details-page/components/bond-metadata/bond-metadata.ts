@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { Card } from '../../../../../../shared/components/card/card';
+import { FormCheckbox } from '../../../../../../shared/components/form/form-checkbox/form-checkbox';
 import { FormDate } from '../../../../../../shared/components/form/form-date/form-date';
 import { FormNumber } from '../../../../../../shared/components/form/form-number/form-number';
 import { FormSelect } from '../../../../../../shared/components/form/form-select/form-select';
@@ -24,6 +25,7 @@ import { Frequencies } from '../../../../../../shared/options/frequency.options'
     FormSelect,
     FormNumber,
     FormDate,
+    FormCheckbox,
   ],
   templateUrl: './bond-metadata.html',
   styleUrl: './bond-metadata.scss',
