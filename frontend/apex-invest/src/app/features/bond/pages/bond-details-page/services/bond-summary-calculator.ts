@@ -15,15 +15,31 @@ import { FrequencySteps } from '../../../../../shared/options/frequency.options'
 export class BondSummaryCalculator {
   calculatePositionCount(operations: BondDetailsOperation[]): number {
     return operations.reduce(
-      (sum, operation) => sum + (operation.type === 'buy' ? operation.count : -operation.count),
+      (sum, operation) => sum + (this.isBuy(operation) ? operation.count : -operation.count),
       0,
     );
   }
 
   calculateTotalBuySum(operations: BondDetailsOperation[]): number {
     return operations
-      .filter((operation) => operation.type === 'buy')
+      .filter((operation) => this.isBuy(operation))
       .reduce((sum, operation) => sum + operation.price * operation.count, 0);
+  }
+
+  calculateLastBuyPrice(operations: BondDetailsOperation[]): number {
+    const lastBuy = operations
+      .filter((operation) => this.isBuy(operation))
+      .reduce<BondDetailsOperation | null>((current, operation) => {
+        if (!current) {
+          return operation;
+        }
+
+        const date = this.parseDate(operation.date);
+        const currentDate = this.parseDate(current.date);
+        return date && (!currentDate || date >= currentDate) ? operation : current;
+      }, null);
+
+    return lastBuy?.price ?? 0;
   }
 
   calculateOverpay(operations: BondDetailsOperation[], parPrice: number): number {
@@ -68,8 +84,12 @@ export class BondSummaryCalculator {
 
   private calculateBoughtCount(operations: BondDetailsOperation[]): number {
     return operations
-      .filter((operation) => operation.type === 'buy')
+      .filter((operation) => this.isBuy(operation))
       .reduce((sum, operation) => sum + operation.count, 0);
+  }
+
+  private isBuy(operation: BondDetailsOperation): boolean {
+    return operation.type?.toLowerCase() === 'buy';
   }
 
   private parseDate(value: unknown): Date | null {
