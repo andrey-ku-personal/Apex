@@ -21,8 +21,8 @@ export class BondFormFactory {
       refinancingRate: [bond?.refinancingRate ?? false],
       paymentFrequency: [bond?.paymentFrequency ?? '', [Validators.required]],
       nextCouponDate: [bond?.nextCouponDate ?? 0, [Validators.required, Validators.min(1), Validators.max(31)]],
+      placementDate: [bond?.placementDate ?? '', [Validators.required]],
       maturityDate: [bond?.maturityDate ?? '', [Validators.required]],
-      status: [bond?.status ?? 'active', [Validators.required]],
       operations: this.createOperationsArray(bond?.operations)
     });
   }

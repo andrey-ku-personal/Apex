@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  width: 100%;
+
+  .form-field {
+    width: 100%;
+  }
+}
+
+.range-error {
+  margin-top: 0.25rem;
+
+  font-size: 0.75rem;
+  color: hsl(var(--destructive));
+}

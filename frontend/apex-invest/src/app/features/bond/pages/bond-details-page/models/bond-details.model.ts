@@ -11,7 +11,7 @@ export interface BondDetails {
   refinancingRate?: boolean;
   paymentFrequency: string;
   nextCouponDate: number;
+  placementDate?: string;
   maturityDate: string;
-  status: string;
   operations: BondDetailsOperation[];
 }

@@ -1,0 +1,27 @@
+<mat-form-field appearance="outline" class="form-field">
+  <mat-label>{{ label() }}{{ isRequired() ? ' *' : '' }}</mat-label>
+  <mat-date-range-input [formGroup]="internal" [rangePicker]="picker">
+    <input
+      matStartDate
+      formControlName="start"
+      [placeholder]="startPlaceholder()"
+      (dateChange)="onStartDateChange()"
+      (dateInput)="onStartDateChange()"
+    />
+    <input
+      matEndDate
+      formControlName="end"
+      [placeholder]="endPlaceholder()"
+      (dateChange)="onEndDateChange()"
+      (dateInput)="onEndDateChange()"
+    />
+  </mat-date-range-input>
+  <mat-datepicker-toggle matIconSuffix [for]="picker" />
+  <mat-date-range-picker #picker />
+  @if (note()) {
+    <mat-hint>{{ note() }}</mat-hint>
+  }
+</mat-form-field>
+@if (errorMessage) {
+  <div class="range-error">{{ errorMessage }}</div>
+}

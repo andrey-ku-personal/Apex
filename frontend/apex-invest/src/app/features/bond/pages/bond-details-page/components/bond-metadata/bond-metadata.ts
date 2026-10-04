@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { Card } from '../../../../../../shared/components/card/card';
+import { BondFormGroup } from '../../form-groups/bond-form-group';
 import { FormCheckbox } from '../../../../../../shared/components/form/form-checkbox/form-checkbox';
-import { FormDate } from '../../../../../../shared/components/form/form-date/form-date';
+import { FormDateRange } from '../../../../../../shared/components/form/form-date-range/form-date-range';
 import { FormNumber } from '../../../../../../shared/components/form/form-number/form-number';
 import { FormSelect } from '../../../../../../shared/components/form/form-select/form-select';
 import { FormText } from '../../../../../../shared/components/form/form-text/form-text';
-import { BondStatuses } from '../../../../../../shared/options/bond-status.options';
 import { Currencies } from '../../../../../../shared/options/currency.options';
 import { Frequencies } from '../../../../../../shared/options/frequency.options';
 
@@ -24,14 +24,19 @@ import { Frequencies } from '../../../../../../shared/options/frequency.options'
     FormText,
     FormSelect,
     FormNumber,
-    FormDate,
+    FormDateRange,
     FormCheckbox,
   ],
   templateUrl: './bond-metadata.html',
   styleUrl: './bond-metadata.scss',
 })
 export class BondMetadata {
+  private readonly formDirective = inject(FormGroupDirective);
+
+  protected get form(): BondFormGroup {
+    return this.formDirective.form as BondFormGroup;
+  }
+
   protected readonly currencies = Currencies;
   protected readonly frequencies = Frequencies;
-  protected readonly statuses = BondStatuses;
 }

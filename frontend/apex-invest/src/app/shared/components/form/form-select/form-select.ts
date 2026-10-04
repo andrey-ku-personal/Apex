@@ -21,6 +21,5 @@ import { OptionModel } from '../../../models/option.model';
 export class FormSelect extends FormControlAbstract<string> {
   public readonly label = input<string>('');
   public readonly placeholder = input<string>('');
-  public readonly isRequired = input<boolean>(false);
   public readonly options = input<OptionModel[]>([]);
 }

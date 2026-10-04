@@ -1,8 +1,8 @@
 @if (label()) {
   <span class="checkbox-label">{{ label() }}</span>
 }
-<div class="checkbox-field" [class.checkbox-field-checked]="control?.value">
-  <mat-checkbox [formControl]="control">{{ text() }}</mat-checkbox>
+<div class="checkbox-field" [class.checkbox-field-checked]="control.value">
+  <mat-checkbox disableRipple [formControl]="control">{{ text() }}</mat-checkbox>
   @if (note()) {
     <span class="checkbox-note">{{ note() }}</span>
   }

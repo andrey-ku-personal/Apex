@@ -12,7 +12,7 @@ export type BondFormGroup = FormGroup<{
   refinancingRate: FormControl<boolean>;
   paymentFrequency: FormControl<string>;
   nextCouponDate: FormControl<number>;
+  placementDate: FormControl<string>;
   maturityDate: FormControl<string>;
-  status: FormControl<string>;
   operations: FormArray<OperationFormGroup>;
 }>;

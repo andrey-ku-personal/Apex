@@ -20,6 +20,5 @@ import { FormControlAbstract } from '../abstract/form-control.abstract';
 export class FormTextArea extends FormControlAbstract<string> {
   public readonly label = input<string>('');
   public readonly placeholder = input<string>('');
-  public readonly isRequired = input<boolean>(false);
   public readonly rows = input<number>(5);
 }

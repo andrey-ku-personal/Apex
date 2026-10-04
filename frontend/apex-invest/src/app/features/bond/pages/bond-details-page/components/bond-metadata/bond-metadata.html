@@ -2,18 +2,21 @@
   <div class="general-data-form">
     <app-form-text label="Тикер" placeholder="OFZ-26228" formControlName="ticker" [isRequired]="true" />
     <app-form-text label="Эмитент" placeholder="Минфин РФ" formControlName="issuer" [isRequired]="true"/>
-    <app-form-select label="Статус" [options]="statuses" formControlName="status" [isRequired]="true"/>
+    <app-form-date-range
+      label="Период обращения"
+      startPlaceholder="Начало"
+      endPlaceholder="Конец"
+      [isRequired]="true"
+      [startControl]="form.controls.placementDate"
+      [endControl]="form.controls.maturityDate"
+    />
+    <app-form-select label="Валюта" [options]="currencies" formControlName="currency" [isRequired]="true"/>
+    <app-form-select label="Частота" formControlName="paymentFrequency" [isRequired]="true" [options]="frequencies"/>
     <app-form-number label="Номинал" placeholder="1000" formControlName="parPrice" [isRequired]="true"/>
     <app-form-number label="Ставка, %" placeholder="12.25" formControlName="couponRate" [step]="0.01" [isRequired]="true"/>
-    <app-form-select label="Валюта" [options]="currencies" formControlName="currency" [isRequired]="true"/>
     <app-form-number label="День выплаты" placeholder="15" formControlName="nextCouponDate" [step]="1" [isRequired]="true"/>
-    <app-form-date label="Дата погашения" formControlName="maturityDate" [isRequired]="true"/>
-    <app-form-select label="Частота" formControlName="paymentFrequency" [isRequired]="true" [options]="frequencies"/>
     <app-form-checkbox
-      class="span-full"
       label="Привязка к ставке"
-      text="Зависит от ставки рефинансирования"
-      note="купон = СР ЦБ + надбавка · пересчёт при изменении ставки"
       formControlName="refinancingRate"
     />
   </div>

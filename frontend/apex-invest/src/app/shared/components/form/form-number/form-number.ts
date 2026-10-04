@@ -20,6 +20,5 @@ import { FormControlAbstract } from '../abstract/form-control.abstract';
 export class FormNumber extends FormControlAbstract<number | null> {
   public readonly label = input<string>('');
   public readonly placeholder = input<string>('');
-  public readonly isRequired = input<boolean>(false);
   public readonly step = input<number | string>('any');
 }
