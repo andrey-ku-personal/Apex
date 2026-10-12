@@ -14,7 +14,7 @@ public class BondDetailsModel
     public decimal CouponRate { get; set; }
     public int NextCouponDate { get; set; }
     public DateOnly MaturityDate { get; set; }
-    public PaymentFrequence PaymentFrequence { get; set; }
+    public PaymentFrequency PaymentFrequency { get; set; }
     public Status Status { get; set; }
 
     public int TotalQuantity { get; set; }

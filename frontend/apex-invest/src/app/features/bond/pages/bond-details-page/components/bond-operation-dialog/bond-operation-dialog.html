@@ -1,0 +1,41 @@
+<mat-dialog-content class="dialog-content">
+  <div class="dialog-header">
+    <mat-icon>swap_horiz</mat-icon>
+
+    <h2 class="dialog-header-title">Операция</h2>
+  </div>
+
+  <div [formGroup]="form" class="operation-form">
+    <div class="form-grid">
+      <app-form-select label="Тип" formControlName="type" [options]="operationTypes" />
+      <app-form-date label="Дата" formControlName="date" [isRequired]="true" />
+      <app-form-select label="Платформа" formControlName="platformId" [options]="platformTypes" />
+      <app-form-number label="Цена, BYN" placeholder="1010" formControlName="price" [step]="0.01" />
+      <app-form-number label="Кол-во" placeholder="100" formControlName="count" />
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Сумма, BYN</mat-label>
+        <input
+          matInput
+          readonly
+          type="number"
+          [value]="(form.controls.price.value || 0) * (form.controls.count.value || 0)"
+        />
+      </mat-form-field>
+    </div>
+
+    <app-form-text-area
+      formControlName="comment"
+      label="Комментарий - чем руководствовались при операции"
+      [rows]="4"
+    />
+  </div>
+
+  <div class="dialog-actions">
+    <button matButton="outlined" type="button" (click)="onCancel()">Отмена</button>
+
+    <button matButton="filled" type="button" (click)="onSave()">
+      <mat-icon>check</mat-icon>
+      Сохранить
+    </button>
+  </div>
+</mat-dialog-content>

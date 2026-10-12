@@ -169,9 +169,9 @@ namespace Apex.Invest.Migrations.Migrations
                         .HasColumnType("numeric(18,2)")
                         .HasColumnName("ParPrice");
 
-                    b.Property<int>("PaymentFrequence")
+                    b.Property<int>("PaymentFrequency")
                         .HasColumnType("integer")
-                        .HasColumnName("PaymentFrequence");
+                        .HasColumnName("PaymentFrequency");
 
                     b.ToTable("Bond", (string)null);
                 });

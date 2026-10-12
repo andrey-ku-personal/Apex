@@ -1,0 +1,39 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon>{{ isEdit ? 'edit' : 'add_circle' }}</mat-icon>
+  {{ isEdit ? 'Редактирование операции' : 'Новая операция' }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <div [formGroup]="form" class="operation-form">
+    <div class="form-grid">
+      <app-form-select label="Тип" formControlName="type" [options]="operationTypes" />
+      <app-form-date label="Дата" formControlName="date" [isRequired]="true" />
+      <app-form-select label="Платформа" formControlName="platformId" [options]="platformTypes" />
+      <app-form-number label="Цена, BYN" placeholder="1010" formControlName="price" [step]="0.01" />
+      <app-form-number label="Кол-во" placeholder="100" formControlName="count" />
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Сумма, BYN</mat-label>
+        <input
+          matInput
+          readonly
+          type="number"
+          [value]="(form.controls.price.value || 0) * (form.controls.count.value || 0)"
+        />
+      </mat-form-field>
+    </div>
+
+    <app-form-text-area
+      formControlName="comment"
+      label="Комментарий - чем руководствовались при операции"
+    />
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button matButton="outlined" type="button" (click)="onCancel()">Отмена</button>
+
+  <button matButton="filled" type="button" (click)="onSave()">
+    <mat-icon>{{ isEdit ? 'check' : 'add' }}</mat-icon>
+    {{ isEdit ? 'Сохранить' : 'Добавить' }}
+  </button>
+</mat-dialog-actions>

@@ -7,6 +7,14 @@
   }
 }
 
+:host ::ng-deep .mat-date-range-input-container {
+  min-width: 0;
+}
+
+:host ::ng-deep .mat-date-range-input-wrapper {
+  min-width: 0;
+}
+
 .range-error {
   margin-top: 0.25rem;
 

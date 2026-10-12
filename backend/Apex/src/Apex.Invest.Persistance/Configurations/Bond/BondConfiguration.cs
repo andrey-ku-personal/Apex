@@ -13,8 +13,8 @@ public class BondConfiguration : IEntityTypeConfiguration<Domain.Entities.Bond.B
             .HasColumnName("Currency")
             .IsRequired();
 
-        builder.Property(p => p.PaymentFrequence)
-            .HasColumnName("PaymentFrequence")
+        builder.Property(p => p.PaymentFrequency)
+            .HasColumnName("PaymentFrequency")
             .IsRequired();
 
         builder.Property(p => p.ParPrice)

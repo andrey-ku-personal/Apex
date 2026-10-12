@@ -16,7 +16,7 @@ public class BondDetailsFaker
         .RuleFor(c => c.Currency, f => f.PickRandom<Currency>())
         .RuleFor(c => c.ParPrice, f => Math.Round(f.Random.Decimal(100m, 10000m), 2))
         .RuleFor(c => c.CouponRate, f => Math.Round(f.Random.Decimal(1m, 20m), 2))
-        .RuleFor(c => c.PaymentFrequence, f => f.PickRandom<PaymentFrequence>())
+        .RuleFor(c => c.PaymentFrequency, f => f.PickRandom<PaymentFrequency>())
         .RuleFor(c => c.NextCouponDate, f => f.Random.Int(1, 31))
         .RuleFor(c => c.MaturityDate, f => DateOnly.FromDateTime(f.Date.Between(DateTime.Today.AddYears(1), DateTime.Today.AddYears(5))))
         .RuleFor(c => c.TotalQuantity, _ => 0)

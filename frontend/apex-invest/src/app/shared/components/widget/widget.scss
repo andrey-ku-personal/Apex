@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+app-card {
+  display: block;
+  height: 100%;
+}
+
+.widget-body {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.widget-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.widget-empty-icon {
+  width: 2rem;
+  height: 2rem;
+  font-size: 2rem;
+  color: #94a3b8;
+}
+
+.widget-empty-text {
+  margin: 0.5rem 0 0;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.875rem;
+}
+
+::ng-deep {
+  .app-card {
+    height: 100%;
+  }
+
+  mat-card-header {
+    flex-shrink: 0;
+    padding-bottom: 0.75rem;
+  }
+
+  mat-card-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,11 +1,11 @@
 import { OptionModel } from '../models/option.model';
 
 export const Frequencies: OptionModel[] = [
-  { value: 'monthly', label: 'Ежемесячно' },
-  { value: 'quarterly', label: 'Ежеквартально' },
-  { value: 'semiannual', label: 'Полугодовая' },
-  { value: 'annual', label: 'Ежегодно' },
-  { value: 'end', label: 'В конце срока' }
+  { value: 'Monthly', label: 'Ежемесячно' },
+  { value: 'Quarterly', label: 'Ежеквартально' },
+  { value: 'Semiannual', label: 'Полугодовая' },
+  { value: 'Annual', label: 'Ежегодно' },
+  { value: 'End', label: 'В конце срока' }
 ]
 
 export const FrequencySteps: Record<string, number> = {

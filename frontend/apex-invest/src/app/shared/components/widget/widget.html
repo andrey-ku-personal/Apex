@@ -1,0 +1,20 @@
+<app-card [icon]="icon()" [title]="title()">
+  <div cardHeaderTrailing>
+    @if (titleLeft(); as template) {
+      <ng-container [ngTemplateOutlet]="template" />
+    }
+  </div>
+  <div class="widget-body">
+    <ng-content />
+    @if (empty()) {
+      <div class="widget-empty">
+        @if (emptyTemplate(); as template) {
+          <ng-container [ngTemplateOutlet]="template" />
+        } @else {
+          <mat-icon class="widget-empty-icon">inbox</mat-icon>
+          <p class="widget-empty-text">Нет данных</p>
+        }
+      </div>
+    }
+  </div>
+</app-card>

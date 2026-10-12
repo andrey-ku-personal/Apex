@@ -1,7 +1,7 @@
-<app-card icon="description" title="Данные выпуска">
+<app-widget icon="description" title="Данные выпуска">
   <div class="general-data-form">
-    <app-form-text label="Тикер" placeholder="OFZ-26228" formControlName="ticker" [isRequired]="true" />
-    <app-form-text label="Эмитент" placeholder="Минфин РФ" formControlName="issuer" [isRequired]="true"/>
+    <app-form-text label="Тикер" placeholder="OFZ-26228" formControlName="ticker" />
+    <app-form-text label="Эмитент" placeholder="Минфин РФ" formControlName="issuer" />
     <app-form-date-range
       label="Период обращения"
       startPlaceholder="Начало"
@@ -10,14 +10,11 @@
       [startControl]="form.controls.placementDate"
       [endControl]="form.controls.maturityDate"
     />
-    <app-form-select label="Валюта" [options]="currencies" formControlName="currency" [isRequired]="true"/>
-    <app-form-select label="Частота" formControlName="paymentFrequency" [isRequired]="true" [options]="frequencies"/>
-    <app-form-number label="Номинал" placeholder="1000" formControlName="parPrice" [isRequired]="true"/>
-    <app-form-number label="Ставка, %" placeholder="12.25" formControlName="couponRate" [step]="0.01" [isRequired]="true"/>
-    <app-form-number label="День выплаты" placeholder="15" formControlName="nextCouponDate" [step]="1" [isRequired]="true"/>
-    <app-form-checkbox
-      label="Привязка к ставке"
-      formControlName="refinancingRate"
-    />
+    <app-form-number label="День выплаты" placeholder="15" formControlName="nextCouponDate" [step]="1" />
+    <app-form-select label="Частота" formControlName="paymentFrequency" [options]="frequencies"/>
+    <app-form-select label="Валюта" [options]="currencies" formControlName="currency"/>
+    <app-form-number label="Номинал" placeholder="1000" formControlName="parPrice" />
+    <app-form-number label="Ставка, %" placeholder="12.25" formControlName="couponRate" [step]="0.01" />
+    <app-form-checkbox label="Привязка к ставке" formControlName="refinancingRate" />
   </div>
-</app-card>
+</app-widget>

@@ -216,3 +216,13 @@ html {
     font-size: 0.8125rem;
   }
 }
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-color: hsl(var(--card));
+  --mdc-dialog-container-shape: var(--radius-lg);
+  --mat-sys-surface-container-high: hsl(var(--card));
+}
+
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+  --mat-dialog-container-max-width: 96vw;
+}

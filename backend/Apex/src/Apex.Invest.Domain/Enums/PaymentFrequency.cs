@@ -1,6 +1,6 @@
 ﻿namespace Apex.Invest.Domain.Enums;
 
-public enum PaymentFrequence
+public enum PaymentFrequency
 {
     Monthly,
     Quarterly,

@@ -130,7 +130,7 @@ public class BondDetailsTests(SliceFixture fixture)
         result.Currency.ShouldBe(model.Currency);
         result.ParPrice.ShouldBe(model.ParPrice);
         result.CouponRate.ShouldBe(model.CouponRate);
-        result.PaymentFrequence.ShouldBe(model.PaymentFrequence);
+        result.PaymentFrequency.ShouldBe(model.PaymentFrequency);
         result.MaturityDate.ShouldBe(model.MaturityDate);
         if (result.Operations.HasAny())
             result.Operations!.Count.ShouldBe(model.Operations!.Count);

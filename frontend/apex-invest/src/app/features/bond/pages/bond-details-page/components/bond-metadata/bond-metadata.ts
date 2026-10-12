@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
-import { Card } from '../../../../../../shared/components/card/card';
+import { Widget } from '../../../../../../shared/components/widget/widget';
 import { BondFormGroup } from '../../form-groups/bond-form-group';
 import { FormCheckbox } from '../../../../../../shared/components/form/form-checkbox/form-checkbox';
 import { FormDateRange } from '../../../../../../shared/components/form/form-date-range/form-date-range';
@@ -20,7 +20,7 @@ import { Frequencies } from '../../../../../../shared/options/frequency.options'
   ],
   imports: [
     ReactiveFormsModule,
-    Card,
+    Widget,
     FormText,
     FormSelect,
     FormNumber,

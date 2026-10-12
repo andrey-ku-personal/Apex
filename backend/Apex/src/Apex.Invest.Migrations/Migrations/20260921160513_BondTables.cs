@@ -57,7 +57,7 @@ namespace Apex.Invest.Migrations.Migrations
                     Currency = table.Column<int>(type: "integer", nullable: false),
                     ParPrice = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     CouponRate = table.Column<decimal>(type: "numeric(5,2)", precision: 5, scale: 2, nullable: false),
-                    PaymentFrequence = table.Column<int>(type: "integer", nullable: false),
+                    PaymentFrequency = table.Column<int>(type: "integer", nullable: false),
                     NextCouponDate = table.Column<int>(type: "integer", nullable: false),
                     MaturityDate = table.Column<DateOnly>(type: "date", nullable: false)
                 },
