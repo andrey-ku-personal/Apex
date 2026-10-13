@@ -1,4 +1,11 @@
 <Solution>
+  <Folder Name="/Apex.Portfolio/">
+    <Project Path="src/Apex.Portfolio.Api/Apex.Portfolio.Api.csproj" Id="ded59b40-5595-4613-9895-4f9cfb125983" />
+    <Project Path="src/Apex.Portfolio.Domain/Apex.Portfolio.Domain.csproj" Id="6df59795-e144-400b-98f3-a9301f1e3285" />
+    <Project Path="src/Apex.Portfolio.Features/Apex.Portfolio.Features.csproj" Id="e1d61375-64e1-4272-8e5d-fceabcff129d" />
+    <Project Path="src/Apex.Portfolio.Migrations/Apex.Portfolio.Migrations.csproj" Id="7be670f3-6302-4e88-b959-f202337999ee" />
+    <Project Path="src/Apex.Portfolio.Persistance/Apex.Portfolio.Persistance.csproj" Id="92ae2bf0-dfad-4f06-a2ae-ef9da74786bd" />
+  </Folder>
   <Folder Name="/Invest/">
     <Project Path="src/Apex.Invest.Api/Apex.Invest.Api.csproj" />
     <Project Path="src/Apex.Invest.Domain/Apex.Invest.Domain.csproj" />
