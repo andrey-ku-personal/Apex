@@ -1,11 +1,11 @@
 using Apex.Portfolio.Factories;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Mapper;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Services;
-using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Mapper;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Services;
 using Apex.Portfolio.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Models;
 
 namespace Apex.Portfolio.Features;
 
@@ -19,8 +19,8 @@ public static class InjectionExtension
         {
             var factory = new MapperFactory();
 
-            factory.RegisterMapper(() => new FinancialAttributeListMapper());
-            factory.RegisterMapper(() => new FinancialAttributeManageMapper());
+            factory.RegisterMapper(() => new FinancialAttributeListModelMapper());
+            factory.RegisterMapper(() => new FinancialAttributeModelMapper());
 
             return factory;
         });

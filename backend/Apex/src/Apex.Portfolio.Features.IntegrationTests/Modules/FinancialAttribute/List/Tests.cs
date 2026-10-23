@@ -1,6 +1,6 @@
 ﻿using Apex.Portfolio.Domain.Enums;
 using Apex.Portfolio.Features.IntegrationTests.Modules.FinancialAttribute.Services;
-using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filters;
+using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filtering;
 using Shouldly;
 
 namespace Apex.Portfolio.Features.IntegrationTests.Modules.FinancialAttribute.List;

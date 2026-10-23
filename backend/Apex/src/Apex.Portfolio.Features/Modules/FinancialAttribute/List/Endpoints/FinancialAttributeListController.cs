@@ -1,4 +1,4 @@
-using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filters;
+using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filtering;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Models;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Services;
 using Apex.Shared.Core.Controllers;

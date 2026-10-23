@@ -1,5 +1,5 @@
 using Apex.Portfolio.Abstracts.Details;
-using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Filters;
+using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Filtering;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Models;
 
 namespace Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Services;

@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Apex.Shared.Core.Pagination;
 
-namespace Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Filters;
+namespace Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Filtering;
 
 public class FinancialAttributeQuery : BaseQuery<Domain.Abstractions.FinancialAttribute>
 {

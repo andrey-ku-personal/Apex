@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using Apex.Portfolio.Domain.Enums;
 using Apex.Shared.Core.Pagination;
 
-namespace Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filters;
+namespace Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filtering;
 
 public class FinancialAttributeListQuery : BaseSortQuery<Domain.Abstractions.FinancialAttribute>
 {

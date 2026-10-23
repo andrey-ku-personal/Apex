@@ -11,5 +11,6 @@ public interface IBaseDetailsMapper<TModel, TEntity, TFilter, TQuery>
     public TModel MapToModel(TEntity entity);
     public TFilter MapToFilter(TEntity entity);
     public TQuery MapToQuery(TFilter filter);
+    TEntity MapToEntity(TModel model);
     TEntity MapData(TModel model, TEntity entity);
 }

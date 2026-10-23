@@ -1,12 +1,12 @@
 using Apex.Portfolio.Abstracts.List;
-using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filters;
+using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filtering;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Models;
 using Riok.Mapperly.Abstractions;
 
 namespace Apex.Portfolio.Features.Modules.FinancialAttribute.List.Mapper;
 
 [Mapper(EnumMappingStrategy = EnumMappingStrategy.ByName, EnumMappingIgnoreCase = true)]
-public partial class FinancialAttributeListMapper :
+public partial class FinancialAttributeListModelMapper :
     IBaseListMapper<FinancialAttributeListModel, Domain.Abstractions.FinancialAttribute, FinancialAttributeListFilter, FinancialAttributeListQuery>
 {
 #pragma warning disable RMG020

@@ -33,6 +33,24 @@ public class Tests(SliceFixture fixture) : BaseTests(fixture)
     }
 
     [Fact]
+    public async Task ShouldThrowNotFoundWhenUpdateMissingId()
+    {
+        var model = Faker.FakeModel(MetadataType.Currency);
+
+        var exception = await Should.ThrowAsync<NotFoundException>(() => _dataService.Update(999_999, model));
+
+        exception.Message.ShouldBe("FinancialAttribute was not found 999999");
+    }
+
+    [Fact]
+    public async Task ShouldThrowNotFoundWhenDeleteMissingId()
+    {
+        var exception = await Should.ThrowAsync<NotFoundException>(() => _dataService.Delete(999_999));
+
+        exception.Message.ShouldBe("FinancialAttribute was not found 999999");
+    }
+
+    [Fact]
     public async Task ShouldCreateCurrency()
     {
         var created = await _dataService.Create(MetadataType.Currency);
@@ -56,7 +74,7 @@ public class Tests(SliceFixture fixture) : BaseTests(fixture)
         var created = await _dataService.Create(MetadataType.Currency);
         created.Name = $"RENAMED_{Guid.NewGuid():N}";
 
-        var updated = await _dataService.Upsert(created);
+        var updated = await _dataService.Update(created.Id, created);
 
         updated.Id.ShouldBe(created.Id);
         (await _dataService.Get(created.Id)).Name.ShouldBe(created.Name);
@@ -68,7 +86,7 @@ public class Tests(SliceFixture fixture) : BaseTests(fixture)
         var created = await _dataService.Create(MetadataType.Currency);
         created.Type = MetadataType.PaymentFrequency;
 
-        var exception = await Should.ThrowAsync<BadRequestException>(() => _dataService.Upsert(created));
+        var exception = await Should.ThrowAsync<BadRequestException>(() => _dataService.Update(created.Id, created));
 
         exception.Message.ShouldContain("type cannot be changed");
     }
@@ -81,7 +99,7 @@ public class Tests(SliceFixture fixture) : BaseTests(fixture)
         var model = Faker.FakeModel(MetadataType.Currency);
         model.Name = "DUPLICATE";
 
-        await Should.ThrowAsync<DbUpdateException>(() => _dataService.Upsert(model));
+        await Should.ThrowAsync<DbUpdateException>(() => _dataService.Create(model));
     }
 
     [Fact]

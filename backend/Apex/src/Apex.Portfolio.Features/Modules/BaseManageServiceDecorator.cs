@@ -13,10 +13,16 @@ public class BaseManageServiceDecorator<TModel, TEntity, TFilter, TQuery>(
     where TFilter : class
     where TQuery : IBaseQuery<TEntity>
 {
-    public async Task<TModel> Upsert(TModel model, CancellationToken cancellationToken)
+    public async Task<TModel> Create(TModel model, CancellationToken cancellationToken)
     {
         await validator.ValidateAsync(model, cancellationToken);
-        return await service.Upsert(model, cancellationToken);
+        return await service.Create(model, cancellationToken);
+    }
+
+    public async Task<TModel> Update(TFilter filter, TModel model, CancellationToken cancellationToken)
+    {
+        await validator.ValidateAsync(model, cancellationToken);
+        return await service.Update(filter, model, cancellationToken);
     }
 
     public async Task Delete(TFilter filter, CancellationToken cancellationToken)

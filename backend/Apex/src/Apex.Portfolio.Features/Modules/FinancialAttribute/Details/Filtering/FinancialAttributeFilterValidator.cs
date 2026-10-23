@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Filters;
+namespace Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Filtering;
 
 public class FinancialAttributeFilterValidator : AbstractValidator<FinancialAttributeFilter>
 {

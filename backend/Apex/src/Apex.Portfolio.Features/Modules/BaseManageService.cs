@@ -20,20 +20,46 @@ public abstract class BaseManageService<TModel, TEntity, TFilter, TQuery>(
 
     protected virtual string GetNotFoundMessage(object? context) => $"{typeof(TEntity)} was not found";
 
-    public virtual async Task<TModel> Upsert(TModel model, CancellationToken cancellationToken)
+    protected virtual async Task<TEntity?> FindEntity(EntitiesDbContext db, TFilter filter, bool asNoTracking, CancellationToken cancellationToken)
+    {
+        var query = db.Set<TEntity>().ByQuery(mapper.MapToQuery(filter));
+
+        if (asNoTracking)
+            query = query.AsNoTracking();
+
+        return await query.FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public virtual async Task<TModel> Create(TModel model, CancellationToken cancellationToken)
     {
         await using var db = await dbFactory.CreateDbContextAsync(cancellationToken);
 
         await db.BeginTransactionAsync();
 
-        var entity = await UpsertData(db, model, cancellationToken);
+        var entity = mapper.MapToEntity(model);
+
+        await db.Set<TEntity>().AddAsync(entity, cancellationToken);
 
         await db.CommitTransactionAsync();
 
         return await Get(mapper.MapToFilter(entity), cancellationToken);
     }
 
-    protected abstract Task<TEntity> UpsertData(EntitiesDbContext db, TModel model, CancellationToken cancellationToken);
+    public virtual async Task<TModel> Update(TFilter filter, TModel model, CancellationToken cancellationToken)
+    {
+        await using var db = await dbFactory.CreateDbContextAsync(cancellationToken);
+
+        await db.BeginTransactionAsync();
+
+        var entity = await FindEntity(db, filter, asNoTracking: false, cancellationToken)
+            ?? throw new NotFoundException(GetNotFoundMessage(filter));
+
+        mapper.MapData(model, entity);
+
+        await db.CommitTransactionAsync();
+
+        return await Get(mapper.MapToFilter(entity), cancellationToken);
+    }
 
     public virtual async Task Delete(TFilter filter, CancellationToken cancellationToken)
     {
@@ -41,21 +67,20 @@ public abstract class BaseManageService<TModel, TEntity, TFilter, TQuery>(
 
         await db.BeginTransactionAsync();
 
-        await DeleteData(db, filter, cancellationToken);
+        var entity = await FindEntity(db, filter, asNoTracking: false, cancellationToken)
+            ?? throw new NotFoundException(GetNotFoundMessage(filter));
+
+        db.Set<TEntity>().Remove(entity);
 
         await db.CommitTransactionAsync();
     }
-
-    protected abstract Task DeleteData(EntitiesDbContext db, TFilter filter, CancellationToken cancellationToken);
 
     public async Task<TModel> Get(TFilter filter, CancellationToken cancellationToken)
     {
         await using var db = await dbFactory.CreateDbContextAsync(cancellationToken);
 
-        var entity = await db.Set<TEntity>()
-            .AsNoTracking()
-            .ByQuery(mapper.MapToQuery(filter))
-            .FirstOrDefaultAsync(cancellationToken) ?? throw new NotFoundException(GetNotFoundMessage(filter));
+        var entity = await FindEntity(db, filter, asNoTracking: true, cancellationToken)
+            ?? throw new NotFoundException(GetNotFoundMessage(filter));
 
         return mapper.MapToModel(entity);
     }

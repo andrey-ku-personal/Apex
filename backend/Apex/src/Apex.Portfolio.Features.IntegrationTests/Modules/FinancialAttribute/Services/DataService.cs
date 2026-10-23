@@ -1,9 +1,9 @@
 ﻿using Apex.Portfolio.Domain.Enums;
 using Apex.Portfolio.Features.IntegrationTests.Modules.FinancialAttribute.Details;
-using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Filters;
+using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Filtering;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Models;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Services;
-using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filters;
+using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filtering;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Models;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Services;
 using Apex.Shared.Models.Pagination;
@@ -19,8 +19,11 @@ public class DataService(SliceFixture fixture)
     public Task<FinancialAttributeModel> Get(int id) =>
         fixture.UseServiceAsync<IFinancialAttributeService, FinancialAttributeModel>(svc => svc.Get(new FinancialAttributeFilter { Id = id }, CancellationToken.None));
 
-    public Task<FinancialAttributeModel> Upsert(FinancialAttributeModel model) =>
-        fixture.UseServiceAsync<IFinancialAttributeService, FinancialAttributeModel>(svc => svc.Upsert(model, CancellationToken.None));
+    public Task<FinancialAttributeModel> Create(FinancialAttributeModel model) =>
+        fixture.UseServiceAsync<IFinancialAttributeService, FinancialAttributeModel>(svc => svc.Create(model, CancellationToken.None));
+
+    public Task<FinancialAttributeModel> Update(int id, FinancialAttributeModel model) =>
+        fixture.UseServiceAsync<IFinancialAttributeService, FinancialAttributeModel>(svc => svc.Update(new FinancialAttributeFilter { Id = id }, model, CancellationToken.None));
 
     public Task Delete(int id) =>
         fixture.ExecuteScopeAsync(async sp => await sp.GetRequiredService<IFinancialAttributeService>()
@@ -43,6 +46,6 @@ public class DataService(SliceFixture fixture)
         if (name is not null)
             model.Name = name;
 
-        return await fixture.UseServiceAsync<IFinancialAttributeService, FinancialAttributeModel>(svc => svc.Upsert(model, CancellationToken.None));
+        return await Create(model);
     }
 }

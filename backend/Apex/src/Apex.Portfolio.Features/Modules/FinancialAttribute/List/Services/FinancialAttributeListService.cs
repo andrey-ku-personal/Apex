@@ -1,5 +1,5 @@
 using Apex.Portfolio.Factories;
-using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filters;
+using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Filtering;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Mapper;
 using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Models;
 using Apex.Portfolio.Modules;
@@ -16,4 +16,4 @@ public class FinancialAttributeListService(
         Domain.Abstractions.FinancialAttribute,
         FinancialAttributeListFilter,
         FinancialAttributeListQuery
-    >(dbFactory, mapperFactory.GetMapper<FinancialAttributeListMapper>()), IFinancialAttributeListService;
+    >(dbFactory, mapperFactory.GetMapper<FinancialAttributeListModelMapper>()), IFinancialAttributeListService;
