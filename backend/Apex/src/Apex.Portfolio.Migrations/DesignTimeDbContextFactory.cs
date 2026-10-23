@@ -19,3 +19,10 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<EntitiesDb
         return new EntitiesDbContext(optionsBuilder.Options);
     }
 }
+
+/*  
+ *  Use next commands to support new migrations and update the DB
+ *  $env:DefaultConnection = 'Host=localhost;Port=5432;Database=Apex.Portfolio;Username=postgres;Password=12345'
+ *  dotnet ef migrations add InitBaseTables --project src/Apex.Portfolio.Migrations --startup-project src/Apex.Portfolio.Migrations --context EntitiesDbContext
+ *  dotnet ef database update --project src/Apex.Portfolio.Migrations --startup-project src/Apex.Portfolio.Migrations --context EntitiesDbContext
+ */

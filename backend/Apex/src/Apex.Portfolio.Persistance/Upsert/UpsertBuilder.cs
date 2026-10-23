@@ -3,11 +3,12 @@
 namespace Apex.Portfolio.Persistance.Upsert;
 
 public class UpsertBuilder<TEntity, TSource>(DbSet<TEntity> set, TSource source)
-    where TEntity : class, new()
+    where TEntity : class
     where TSource : class
 {
     private TEntity? _entity;
     private Func<TSource, bool>? _createWhenCondition;
+    private Func<TSource, TEntity>? _createWithFactory;
 
     public UpsertBuilder<TEntity, TSource> OnKey(Func<TSource, object[]> keySelector)
     {
@@ -22,6 +23,12 @@ public class UpsertBuilder<TEntity, TSource>(DbSet<TEntity> set, TSource source)
         return this;
     }
 
+    public UpsertBuilder<TEntity, TSource> CreateWith(Func<TSource, TEntity> factory)
+    {
+        _createWithFactory = factory;
+        return this;
+    }
+
     public async Task<TEntity> ExecuteAsync(Action<TSource, TEntity> updateFn, CancellationToken cancellationToken)
     {
         var isNew = _entity == null;
@@ -31,7 +38,9 @@ public class UpsertBuilder<TEntity, TSource>(DbSet<TEntity> set, TSource source)
             if (_createWhenCondition != null && !_createWhenCondition(source))
                 throw new InvalidOperationException($"Cannot create {typeof(TEntity).Name} - create condition was not met.");
 
-            _entity = new TEntity();
+            _entity = _createWithFactory is not null
+                ? _createWithFactory(source)
+                : throw new InvalidOperationException($"Cannot create {typeof(TEntity).Name} - CreateWith factory was not configured.");
             await set.AddAsync(_entity, cancellationToken);
         }
 
