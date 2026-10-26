@@ -44,8 +44,8 @@ public class BondConfiguration : IEntityTypeConfiguration<Domain.Entities.Bond.B
             .HasPrecision(9, 4)
             .IsRequired();
 
-        builder.Property(p => p.IsFloating)
-            .HasColumnName("IsFloating")
+        builder.Property(p => p.IsRefinancingLinked)
+            .HasColumnName("IsRefinancingLinked")
             .HasColumnType("boolean")
             .IsRequired();
 

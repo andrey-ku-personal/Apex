@@ -1,11 +1,15 @@
 using Apex.Portfolio.Factories;
-using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Mapper;
-using Apex.Portfolio.Features.Modules.FinancialAttribute.List.Services;
-using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Services;
+using Apex.Portfolio.Features.Modules.Bonds.Details.Models;
+using Apex.Portfolio.Features.Modules.Bonds.Details.Services;
+using Apex.Portfolio.Features.Modules.Bonds.List.Models;
+using Apex.Portfolio.Features.Modules.Bonds.List.Services;
+using Apex.Portfolio.Features.Modules.InstrumentMetadata.List.Models;
+using Apex.Portfolio.Features.Modules.InstrumentMetadata.List.Services;
+using Apex.Portfolio.Features.Modules.InstrumentMetadata.Details.Services;
 using Apex.Portfolio.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Apex.Portfolio.Features.Modules.FinancialAttribute.Details.Models;
+using Apex.Portfolio.Features.Modules.InstrumentMetadata.Details.Models;
 
 namespace Apex.Portfolio.Features;
 
@@ -15,25 +19,51 @@ public static class InjectionExtension
     {
         services.AddScoped<IValidationRunner, ValidationRunner>();
 
+        RegisterMappers(services);
+        RegisterInstrumentMetadata(services);
+        RegisterBonds(services);
+    }
+
+    private static void RegisterMappers(IServiceCollection services)
+    {
         services.AddSingleton<IMapperFactory>(sp =>
         {
             var factory = new MapperFactory();
 
-            factory.RegisterMapper(() => new FinancialAttributeListModelMapper());
-            factory.RegisterMapper(() => new FinancialAttributeModelMapper());
+            factory.RegisterMapper(() => new InstrumentMetadataListModelMapper());
+            factory.RegisterMapper(() => new InstrumentMetadataModelMapper());
+            factory.RegisterMapper(() => new BondModelMapper());
+            factory.RegisterMapper(() => new BondListModelMapper());
 
             return factory;
         });
+    }
 
-        services.AddScoped<FinancialAttributeService>();
-        services.AddScoped<IFinancialAttributeService>(sp =>
+    private static void RegisterInstrumentMetadata(IServiceCollection services)
+    {
+        services.AddScoped<InstrumentMetadataService>();
+        services.AddScoped<IInstrumentMetadataService>(sp =>
         {
-            var service = sp.GetRequiredService<FinancialAttributeService>();
+            var service = sp.GetRequiredService<InstrumentMetadataService>();
             var validator = sp.GetRequiredService<IValidationRunner>();
-            return new FinancialAttributeDecorator(service, validator);
+            return new InstrumentMetadataDecorator(service, validator);
         });
 
-        services.AddScoped<FinancialAttributeListService>();
-        services.AddScoped<IFinancialAttributeListService>(sp => sp.GetRequiredService<FinancialAttributeListService>());
+        services.AddScoped<InstrumentMetadataListService>();
+        services.AddScoped<IInstrumentMetadataListService>(sp => sp.GetRequiredService<InstrumentMetadataListService>());
+    }
+
+    private static void RegisterBonds(IServiceCollection services)
+    {
+        services.AddScoped<BondService>();
+        services.AddScoped<IBondService>(sp =>
+        {
+            var service = sp.GetRequiredService<BondService>();
+            var validator = sp.GetRequiredService<IValidationRunner>();
+            return new BondDecorator(service, validator);
+        });
+
+        services.AddScoped<BondListService>();
+        services.AddScoped<IBondListService>(sp => sp.GetRequiredService<BondListService>());
     }
 }

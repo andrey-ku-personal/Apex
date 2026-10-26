@@ -41,10 +41,6 @@ namespace Apex.Portfolio.Migrations.Migrations
                         .HasColumnType("character varying(256)")
                         .HasColumnName("Issuer");
 
-                    b.Property<int>("PlatformId")
-                        .HasColumnType("int")
-                        .HasColumnName("PlatformId");
-
                     b.Property<string>("Ticker")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -58,7 +54,7 @@ namespace Apex.Portfolio.Migrations.Migrations
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("Apex.Portfolio.Domain.Abstractions.FinancialAttribute", b =>
+            modelBuilder.Entity("Apex.Portfolio.Domain.Abstractions.InstrumentMetadata", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,7 +78,7 @@ namespace Apex.Portfolio.Migrations.Migrations
                     b.HasIndex("Type", "Name")
                         .IsUnique();
 
-                    b.ToTable("FinancialAttribute", (string)null);
+                    b.ToTable("InstrumentMetadata", (string)null);
 
                     b.HasDiscriminator<byte>("Type");
 
@@ -125,9 +121,9 @@ namespace Apex.Portfolio.Migrations.Migrations
                         .HasColumnType("int")
                         .HasColumnName("CurrencyId");
 
-                    b.Property<bool>("IsFloating")
+                    b.Property<bool>("IsRefinancingLinked")
                         .HasColumnType("boolean")
-                        .HasColumnName("IsFloating");
+                        .HasColumnName("IsRefinancingLinked");
 
                     b.Property<DateOnly>("IssueDate")
                         .HasColumnType("date")
@@ -162,23 +158,23 @@ namespace Apex.Portfolio.Migrations.Migrations
                     b.ToTable("Bond", (string)null);
                 });
 
-            modelBuilder.Entity("Apex.Portfolio.Domain.Entities.FinancialAttribute.Currency", b =>
+            modelBuilder.Entity("Apex.Portfolio.Domain.Entities.InstrumentMetadata.Currency", b =>
                 {
-                    b.HasBaseType("Apex.Portfolio.Domain.Abstractions.FinancialAttribute");
+                    b.HasBaseType("Apex.Portfolio.Domain.Abstractions.InstrumentMetadata");
 
                     b.HasDiscriminator().HasValue((byte)1);
                 });
 
-            modelBuilder.Entity("Apex.Portfolio.Domain.Entities.FinancialAttribute.PaymentFrequency", b =>
+            modelBuilder.Entity("Apex.Portfolio.Domain.Entities.InstrumentMetadata.PaymentFrequency", b =>
                 {
-                    b.HasBaseType("Apex.Portfolio.Domain.Abstractions.FinancialAttribute");
+                    b.HasBaseType("Apex.Portfolio.Domain.Abstractions.InstrumentMetadata");
 
                     b.HasDiscriminator().HasValue((byte)2);
                 });
 
             modelBuilder.Entity("Apex.Portfolio.Domain.Entities.Bond.Bond", b =>
                 {
-                    b.HasOne("Apex.Portfolio.Domain.Entities.FinancialAttribute.Currency", "Currency")
+                    b.HasOne("Apex.Portfolio.Domain.Entities.InstrumentMetadata.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -190,7 +186,7 @@ namespace Apex.Portfolio.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Apex.Portfolio.Domain.Entities.FinancialAttribute.PaymentFrequency", "PaymentFrequency")
+                    b.HasOne("Apex.Portfolio.Domain.Entities.InstrumentMetadata.PaymentFrequency", "PaymentFrequency")
                         .WithMany()
                         .HasForeignKey("PaymentFrequencyId")
                         .OnDelete(DeleteBehavior.Restrict)

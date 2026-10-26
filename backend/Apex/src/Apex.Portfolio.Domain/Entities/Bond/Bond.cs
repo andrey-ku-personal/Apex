@@ -1,5 +1,5 @@
 ﻿using Apex.Portfolio.Domain.Abstractions;
-using Apex.Portfolio.Domain.Entities.FinancialAttribute;
+using Apex.Portfolio.Domain.Entities.InstrumentMetadata;
 
 namespace Apex.Portfolio.Domain.Entities.Bond;
 
@@ -14,7 +14,7 @@ public class Bond : FinanceInstrument
 
     public decimal ParPrice { get; set; }
     public decimal Rate { get; set; }
-    public bool IsFloating { get; set; }
+    public bool IsRefinancingLinked { get; set; }
 
     public Currency Currency { get; set; } = default!;
     public PaymentFrequency PaymentFrequency { get; set; } = default!;

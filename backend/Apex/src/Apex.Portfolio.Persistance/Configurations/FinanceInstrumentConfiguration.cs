@@ -19,11 +19,6 @@ public class FinanceInstrumentConfiguration : IEntityTypeConfiguration<FinanceIn
             .ValueGeneratedOnAdd()
             .IsRequired();
 
-        builder.Property(p => p.PlatformId)
-            .HasColumnName("PlatformId")
-            .HasColumnType("int")
-            .IsRequired();
-
         builder.Property(p => p.Ticker)
             .HasColumnName("Ticker")
             .HasColumnType("character varying(64)")
