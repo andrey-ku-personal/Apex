@@ -13,11 +13,11 @@ public class EntitiesDbContext(DbContextOptions<EntitiesDbContext> options) : Db
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(EntitiesDbContext).Assembly);
     }
 
-    public async Task BeginTransactionAsync()
+    public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
         if (_currentTransaction != null) return;
 
-        _currentTransaction = await Database.BeginTransactionAsync();
+        _currentTransaction = await Database.BeginTransactionAsync(cancellationToken);
     }
 
     public void BeginTransaction()
@@ -27,13 +27,13 @@ public class EntitiesDbContext(DbContextOptions<EntitiesDbContext> options) : Db
         _currentTransaction = Database.BeginTransaction();
     }
 
-    public async Task CommitTransactionAsync()
+    public async Task CommitTransactionAsync(CancellationToken cancellationToken = default)
     {
         try
         {
             TrackChanges();
-            await SaveChangesAsync().ConfigureAwait(false);
-            if (_currentTransaction != null) await _currentTransaction.CommitAsync();
+            await SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            if (_currentTransaction != null) await _currentTransaction.CommitAsync(cancellationToken);
         }
         catch
         {

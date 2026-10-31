@@ -19,7 +19,6 @@ public static class InjectionExtension
         services.AddTransient<IDateTime, Services.DateTime>();
     }
 
-
     public static void AddSharedControllers(this IServiceCollection services)
     {
         services.AddControllers(options =>

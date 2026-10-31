@@ -14,11 +14,7 @@ public class BondService(
 ) : BaseManageService<BondModel, BondEntity, BondFilter, BondQuery>(dbFactory, mapperFactory.GetMapper<BondModelMapper>())
 {
     protected override string GetNotFoundMessage(object? context)
-        => context switch
-        {
-            BondQuery q => $"Bond was not found {q.Id}",
-            BondModel m => $"Bond was not found {m.Id}",
-            BondFilter f => $"Bond was not found {f.Id}",
-            _ => "Bond was not found"
-        };
+        => context is BondFilter filter
+            ? $"Bond was not found {filter.Id}"
+            : "Bond was not found";
 }

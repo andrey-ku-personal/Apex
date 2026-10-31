@@ -20,6 +20,12 @@ public class ExceptionHandlerAttribute : ExceptionFilterAttribute
             case ValidationException:
                 HandleNotValid(context);
                 break;
+            case ConflictException:
+                HandleConflict(context);
+                break;
+            case UnauthorizedException:
+                HandleUnauthorized(context);
+                break;
             default:
                 HandleInternalError(context);
                 break;
@@ -34,8 +40,14 @@ public class ExceptionHandlerAttribute : ExceptionFilterAttribute
     private static void HandleBadRequest(ExceptionContext context)
         => SetProblem(context, HttpStatusCode.BadRequest, context.Exception.Message);
 
+    private static void HandleConflict(ExceptionContext context)
+        => SetProblem(context, HttpStatusCode.Conflict, context.Exception.Message);
+
+    private static void HandleUnauthorized(ExceptionContext context)
+        => SetProblem(context, HttpStatusCode.Unauthorized, context.Exception.Message);
+
     private static void HandleInternalError(ExceptionContext context)
-        => SetProblem(context, HttpStatusCode.InternalServerError, "Internal Server Error", context.Exception.Message);
+        => SetProblem(context, HttpStatusCode.InternalServerError, "Internal Server Error");
 
     private static void SetProblem(ExceptionContext context, HttpStatusCode status, string title, string? detail = null)
     {

@@ -34,7 +34,7 @@ public class SliceFixture : IAsyncLifetime
 
         var respawner = await Respawner.CreateAsync(connection, new RespawnerOptions
         {
-            TablesToIgnore = ["__EFMigrationsHistory", "FinancePlatform"],
+            TablesToIgnore = ["__EFMigrationsHistory"],
             DbAdapter = DbAdapter.Postgres
         });
 
@@ -44,7 +44,7 @@ public class SliceFixture : IAsyncLifetime
     public async Task ExecuteScopeAsync(Func<IServiceProvider, Task> action)
     {
         using var scope = _scopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<EntitiesDbContext>();
+        using var dbContext = scope.ServiceProvider.GetRequiredService<EntitiesDbContext>();
 
         try
         {

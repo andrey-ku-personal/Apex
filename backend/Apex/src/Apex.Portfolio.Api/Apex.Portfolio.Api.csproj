@@ -14,4 +14,13 @@
     <ProjectReference Include="..\Apex.Portfolio.Features\Apex.Portfolio.Features.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <SourceAppSettingsConfigFile>appsettings.template.json</SourceAppSettingsConfigFile>
+    <TargetAppSettingsConfigFile>appsettings.json</TargetAppSettingsConfigFile>
+  </PropertyGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Copy SourceFiles="$(SourceAppSettingsConfigFile)" DestinationFiles="$(TargetAppSettingsConfigFile)" Condition="!Exists($(TargetAppSettingsConfigFile))" />
+  </Target>
+
 </Project>

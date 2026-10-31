@@ -1,7 +1,7 @@
 using Apex.Portfolio.Features.Modules.InstrumentMetadata.Details.Filtering;
 using Apex.Portfolio.Features.Modules.InstrumentMetadata.Details.Models;
 using Apex.Portfolio.Modules;
-using Apex.Portfolio.Services;
+using Apex.Shared.Core.Services;
 
 namespace Apex.Portfolio.Features.Modules.InstrumentMetadata.Details.Services;
 

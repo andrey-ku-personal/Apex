@@ -1,7 +1,7 @@
 using Apex.Portfolio.Features.Modules.Bonds.Details.Filtering;
 using Apex.Portfolio.Features.Modules.Bonds.Details.Models;
 using Apex.Portfolio.Modules;
-using Apex.Portfolio.Services;
+using Apex.Shared.Core.Services;
 using BondEntity = Apex.Portfolio.Domain.Entities.Bond.Bond;
 
 namespace Apex.Portfolio.Features.Modules.Bonds.Details.Services;

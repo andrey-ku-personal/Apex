@@ -6,10 +6,11 @@ using Apex.Portfolio.Features.Modules.Bonds.List.Services;
 using Apex.Portfolio.Features.Modules.InstrumentMetadata.List.Models;
 using Apex.Portfolio.Features.Modules.InstrumentMetadata.List.Services;
 using Apex.Portfolio.Features.Modules.InstrumentMetadata.Details.Services;
-using Apex.Portfolio.Services;
+using Apex.Shared.Core.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Apex.Portfolio.Features.Modules.InstrumentMetadata.Details.Models;
+using Apex.Shared.Core.Shared;
 
 namespace Apex.Portfolio.Features;
 
@@ -18,6 +19,8 @@ public static class InjectionExtension
     public static void AddFeaturesDependencies(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IValidationRunner, ValidationRunner>();
+
+        services.AddSharedDependencies();
 
         RegisterMappers(services);
         RegisterInstrumentMetadata(services);
@@ -50,7 +53,10 @@ public static class InjectionExtension
         });
 
         services.AddScoped<InstrumentMetadataListService>();
-        services.AddScoped<IInstrumentMetadataListService>(sp => sp.GetRequiredService<InstrumentMetadataListService>());
+        services.AddScoped<IInstrumentMetadataListService>(sp =>
+            new InstrumentMetadataListDecorator(
+                sp.GetRequiredService<InstrumentMetadataListService>(),
+                sp.GetRequiredService<IValidationRunner>()));
     }
 
     private static void RegisterBonds(IServiceCollection services)
@@ -64,6 +70,9 @@ public static class InjectionExtension
         });
 
         services.AddScoped<BondListService>();
-        services.AddScoped<IBondListService>(sp => sp.GetRequiredService<BondListService>());
+        services.AddScoped<IBondListService>(sp =>
+            new BondListDecorator(
+                sp.GetRequiredService<BondListService>(),
+                sp.GetRequiredService<IValidationRunner>()));
     }
 }

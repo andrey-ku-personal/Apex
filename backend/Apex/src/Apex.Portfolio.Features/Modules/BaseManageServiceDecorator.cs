@@ -1,6 +1,6 @@
 using Apex.Portfolio.Abstracts.Details;
-using Apex.Portfolio.Services;
 using Apex.Shared.Core.Pagination.Abstract;
+using Apex.Shared.Core.Services;
 
 namespace Apex.Portfolio.Modules;
 
@@ -21,6 +21,7 @@ public class BaseManageServiceDecorator<TModel, TEntity, TFilter, TQuery>(
 
     public async Task<TModel> Update(TFilter filter, TModel model, CancellationToken cancellationToken)
     {
+        await validator.ValidateAsync(filter, cancellationToken);
         await validator.ValidateAsync(model, cancellationToken);
         return await service.Update(filter, model, cancellationToken);
     }

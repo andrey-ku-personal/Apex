@@ -7,6 +7,14 @@
     <Project Path="src/Apex.Portfolio.Migrations/Apex.Portfolio.Migrations.csproj" Id="7be670f3-6302-4e88-b959-f202337999ee" />
     <Project Path="src/Apex.Portfolio.Persistance/Apex.Portfolio.Persistance.csproj" Id="92ae2bf0-dfad-4f06-a2ae-ef9da74786bd" />
   </Folder>
+  <Folder Name="/Apex.Users/">
+    <Project Path="src/Apex.Users.Api/Apex.Users.Api.csproj" Id="93a458da-4d24-4676-93b2-e6270c083827" />
+    <Project Path="src/Apex.Users.Domain/Apex.Users.Domain.csproj" Id="8ebe43a9-cc03-4932-8517-fee80df8343d" />
+    <Project Path="src/Apex.Users.Features.IntegrationTests/Apex.Users.Features.IntegrationTests.csproj" Id="37dd0faa-e70f-4b70-9d13-f971da80229e" />
+    <Project Path="src/Apex.Users.Features/Apex.Users.Features.csproj" Id="b5c36bb3-2233-47af-bfc1-62f4a2ec9aff" />
+    <Project Path="src/Apex.Users.Migrations/Apex.Users.Migrations.csproj" Id="f8b5d4ae-1104-4dfc-acda-08db13dce47e" />
+    <Project Path="src/Apex.Users.Persistance/Apex.Users.Persistance.csproj" Id="55469e89-2a94-48f7-85e8-4772b82c4718" />
+  </Folder>
   <Folder Name="/Invest/">
     <Project Path="src/Apex.Invest.Api/Apex.Invest.Api.csproj" />
     <Project Path="src/Apex.Invest.Domain/Apex.Invest.Domain.csproj" />

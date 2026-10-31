@@ -110,7 +110,7 @@ public class Tests(SliceFixture fixture) : BaseTests(fixture)
     }
 
     [Fact]
-    public async Task ShoudFilterByName()
+    public async Task ShouldFilterByName()
     {
         var name = $"FREETEXT_{Guid.NewGuid():N}";
         await _dataService.Create(MetadataType.Currency, name);

@@ -2,7 +2,6 @@ using Apex.Portfolio.Domain.Enums;
 using Apex.Portfolio.Features.IntegrationTests.Modules.InstrumentMetadata.Services;
 using BondsDataService = Apex.Portfolio.Features.IntegrationTests.Modules.Bonds.Services.DataService;
 using Apex.Shared.Core.Exceptions;
-using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
 namespace Apex.Portfolio.Features.IntegrationTests.Modules.InstrumentMetadata.Details;
@@ -100,7 +99,7 @@ public class Tests(SliceFixture fixture) : BaseTests(fixture)
         var model = Faker.FakeModel(MetadataType.Currency);
         model.Name = "DUPLICATE";
 
-        await Should.ThrowAsync<DbUpdateException>(() => _dataService.Create(model));
+        await Should.ThrowAsync<ConflictException>(() => _dataService.Create(model));
     }
 
     [Fact]
@@ -121,6 +120,6 @@ public class Tests(SliceFixture fixture) : BaseTests(fixture)
         var bondsDataService = new BondsDataService(fixture);
         await bondsDataService.Create(currencyId: currency.Id);
 
-        await Should.ThrowAsync<DbUpdateException>(() => _dataService.Delete(currency.Id));
+        await Should.ThrowAsync<ConflictException>(() => _dataService.Delete(currency.Id));
     }
 }

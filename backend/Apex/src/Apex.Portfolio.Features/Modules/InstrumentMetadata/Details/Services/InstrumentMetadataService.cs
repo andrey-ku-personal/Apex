@@ -3,8 +3,10 @@ using Apex.Portfolio.Features.Modules.InstrumentMetadata.Details.Filtering;
 using Apex.Portfolio.Features.Modules.InstrumentMetadata.Details.Models;
 using Apex.Portfolio.Modules;
 using Apex.Portfolio.Persistance;
+using Apex.Shared.Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using InstrumentMetadataEntity = Apex.Portfolio.Domain.Abstractions.InstrumentMetadata;
+using BondEntity = Apex.Portfolio.Domain.Entities.Bond.Bond;
 
 namespace Apex.Portfolio.Features.Modules.InstrumentMetadata.Details.Services;
 
@@ -14,11 +16,16 @@ public class InstrumentMetadataService(
 ) : BaseManageService<InstrumentMetadataModel, InstrumentMetadataEntity, InstrumentMetadataFilter, InstrumentMetadataQuery>(dbFactory, mapperFactory.GetMapper<InstrumentMetadataModelMapper>())
 {
     protected override string GetNotFoundMessage(object? context)
-        => context switch
-        {
-            InstrumentMetadataQuery q => $"InstrumentMetadata was not found {q.Id}",
-            InstrumentMetadataModel m => $"InstrumentMetadata was not found {m.Id}",
-            InstrumentMetadataFilter f => $"InstrumentMetadata was not found {f.Id}",
-            _ => "InstrumentMetadata was not found"
-        };
+        => context is InstrumentMetadataFilter filter
+            ? $"InstrumentMetadata was not found {filter.Id}"
+            : "InstrumentMetadata was not found";
+
+    protected override async Task ValidateDeleteAsync(EntitiesDbContext db, InstrumentMetadataEntity entity, CancellationToken cancellationToken)
+    {
+        var usedByBonds = await db.Set<BondEntity>()
+            .AnyAsync(x => x.CurrencyId == entity.Id || x.PaymentFrequencyId == entity.Id, cancellationToken);
+
+        if (usedByBonds)
+            throw new ConflictException("InstrumentMetadata is used by bonds");
+    }
 }

@@ -14,7 +14,7 @@ public class BaseGetListService<TModel, TEntity, TFilter, TQuery>(
     where TModel : class
     where TEntity : class
     where TFilter : IPageSortQuery
-    where TQuery : IBaseSortQuery<TEntity>, new()
+    where TQuery : IBaseSortQuery<TEntity>
 {
     public virtual async Task<PageDataResponse<TModel>> GetList(TFilter filter, CancellationToken cancellationToken)
     {
