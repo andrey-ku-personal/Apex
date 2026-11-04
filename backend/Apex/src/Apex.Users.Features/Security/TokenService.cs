@@ -10,7 +10,18 @@ namespace Apex.Users.Features.Security;
 public sealed class TokenService(IOptions<AuthOptions> options) : ITokenService
 {
     private readonly AuthOptions _options = options.Value;
-    private readonly SymmetricSecurityKey _signingKey = new(Encoding.UTF8.GetBytes(options.Value.Key));
+    private readonly RsaSecurityKey _signingKey = CreateSigningKey(options.Value.PrivateKey);
+
+    public static RsaSecurityKey CreateSigningKey(string privateKeyPem)
+    {
+        using var rsa = RSA.Create();
+        rsa.ImportFromPem(privateKeyPem);
+
+        return new RsaSecurityKey(rsa.ExportParameters(includePrivateParameters: true))
+        {
+            KeyId = "apex-users-signing-key"
+        };
+    }
 
     public string CreateAccessToken(User user, IReadOnlyCollection<string> roles)
     {
@@ -22,7 +33,7 @@ public sealed class TokenService(IOptions<AuthOptions> options) : ITokenService
             Audience = _options.Audience,
             IssuedAt = now,
             Expires = now.AddMinutes(_options.AccessTokenInMinutes),
-            SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256),
+            SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.RsaSha256),
             Claims = new Dictionary<string, object>
             {
                 ["sub"] = user.Id,

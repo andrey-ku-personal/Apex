@@ -1,58 +1,93 @@
+using Apex.Shared.Core.Extensions;
 using Apex.Shared.Core.Middleware;
 using Apex.Shared.Core.Shared;
 using Apex.Users.Features;
+using Apex.Users.Features.Security;
 using Apex.Users.Persistance;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using NLog;
+using NLog.Web;
 
-var builder = WebApplication.CreateBuilder(args);
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSharedDependencies();
-builder.Services.AddPersistenceDependencies(builder.Configuration);
-builder.Services.AddFeaturesDependencies(builder.Configuration);
+    builder.Logging.ClearProviders();
+    builder.Host.UseNLog();
 
-var authKey = builder.Configuration["Authentication:Key"];
-ArgumentException.ThrowIfNullOrWhiteSpace(authKey);
-if (Encoding.UTF8.GetByteCount(authKey) < 32)
-    throw new InvalidOperationException("Authentication:Key must be at least 32 bytes long for HS256");
+    RegisterServices(builder);
 
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.MapInboundClaims = false;
-        options.TokenValidationParameters = new TokenValidationParameters
+    var app = builder.Build();
+
+    ConfigureApplication(app);
+
+    app.Run();
+}
+catch (Exception e)
+{
+    logger.Error(e, "Stopped program because of exception");
+    throw;
+}
+finally
+{
+    logger.LogAppBye();
+    LogManager.Shutdown();
+}
+
+static void RegisterServices(WebApplicationBuilder builder)
+{
+    builder.Services.AddSharedControllers();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSharedDependencies();
+    builder.Services.AddPersistenceDependencies(builder.Configuration);
+    builder.Services.AddFeaturesDependencies(builder.Configuration);
+    builder.Services.AddSharedCors();
+    builder.Services.AddSharedSwagger();
+
+    var privateKeyPem = builder.Configuration["Authentication:PrivateKey"];
+    ArgumentException.ThrowIfNullOrWhiteSpace(privateKeyPem);
+
+    var signingKey = TokenService.CreateSigningKey(privateKeyPem);
+    if (signingKey.KeySize < 2048)
+        throw new InvalidOperationException("Authentication:PrivateKey must be an RSA key of at least 2048 bits");
+
+    builder.Services
+        .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
         {
-            ValidateIssuer = true,
-            ValidIssuer = builder.Configuration["Authentication:Issuer"],
-            ValidateAudience = true,
-            ValidAudience = builder.Configuration["Authentication:Audience"],
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Authentication:Key"]!)),
-            ValidateLifetime = true,
-            NameClaimType = "sub",
-            RoleClaimType = "role"
-        };
-    });
-builder.Services.AddAuthorization();
+            options.MapInboundClaims = false;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = builder.Configuration["Authentication:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = builder.Configuration["Authentication:Audience"],
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                ValidateLifetime = true,
+                NameClaimType = "sub",
+                RoleClaimType = "role"
+            };
+        });
 
-var app = builder.Build();
+    builder.Services.AddAuthorization();
+}
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+static void ConfigureApplication(WebApplication app)
+{
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-if (app.Environment.IsDevelopment())
-    app.MapOpenApi();
+    app.UseHttpsRedirection();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    app.MapControllers();
 
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapControllers();
+    app.UseMiddleware<CorrelationIdMiddleware>();
+    app.UseMiddleware<RequestLoggingMiddleware>();
 
-app.Run();
-
-public partial class Program;
+    app.UseSharedCors();
+    app.UseSharedSwagger();
+}

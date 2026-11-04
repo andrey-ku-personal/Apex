@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.9" />
   </ItemGroup>
 
@@ -18,10 +18,14 @@
   <PropertyGroup>
     <SourceAppSettingsConfigFile>appsettings.template.json</SourceAppSettingsConfigFile>
     <TargetAppSettingsConfigFile>appsettings.json</TargetAppSettingsConfigFile>
+    <SourceNLogConfigFile>nlog.template.config</SourceNLogConfigFile>
+    <TargetNLogConfigFile>nlog.config</TargetNLogConfigFile>
+    <UserSecretsId>a753395d-6c3d-4488-9d4c-c0b49e23daa9</UserSecretsId>
   </PropertyGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Copy SourceFiles="$(SourceAppSettingsConfigFile)" DestinationFiles="$(TargetAppSettingsConfigFile)" Condition="!Exists($(TargetAppSettingsConfigFile))" />
+    <Copy SourceFiles="$(SourceNLogConfigFile)" DestinationFiles="$(TargetNLogConfigFile)" Condition="!Exists($(TargetNLogConfigFile))" />
   </Target>
 
 </Project>

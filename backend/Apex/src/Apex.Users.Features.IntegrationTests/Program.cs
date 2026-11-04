@@ -1,11 +1,11 @@
 using Apex.Shared.Core.Shared;
 using Apex.Users.Features;
+using Apex.Users.Features.Security;
 using Apex.Users.Persistance;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,8 +38,7 @@ static void RegisterServices(WebApplicationBuilder builder)
                 ValidateAudience = true,
                 ValidAudience = builder.Configuration["Authentication:Audience"],
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(builder.Configuration["Authentication:Key"]!)),
+                IssuerSigningKey = TokenService.CreateSigningKey(builder.Configuration["Authentication:PrivateKey"]!),
                 ValidateLifetime = true,
                 NameClaimType = "sub",
                 RoleClaimType = "role"

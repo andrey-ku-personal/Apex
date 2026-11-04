@@ -98,12 +98,12 @@ public class Tests(SliceFixture fixture) : BaseTests(fixture)
     }
 
     [Fact]
-    public async Task ShouldDeleteBond()
+    public async Task ShouldThrowConflictWhenDeleteBond()
     {
         var created = await _dataService.Create();
 
-        await _dataService.Delete(created.Id);
+        await Should.ThrowAsync<ConflictException>(() => _dataService.Delete(created.Id));
 
-        await Should.ThrowAsync<NotFoundException>(() => _dataService.Get(created.Id));
+        (await _dataService.Get(created.Id)).Id.ShouldBe(created.Id);
     }
 }

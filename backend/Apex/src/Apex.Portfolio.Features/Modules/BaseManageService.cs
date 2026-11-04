@@ -21,6 +21,12 @@ public abstract class BaseManageService<TModel, TEntity, TFilter, TQuery>(
 
     protected virtual string GetNotFoundMessage(object? context) => $"{typeof(TEntity)} was not found";
 
+    protected virtual Task ValidateCreateAsync(EntitiesDbContext db, TEntity entity, CancellationToken cancellationToken) =>
+        Task.CompletedTask;
+
+    protected virtual Task ValidateUpdateAsync(EntitiesDbContext db, TEntity entity, TModel model, CancellationToken cancellationToken) =>
+        Task.CompletedTask;
+
     protected virtual Task ValidateDeleteAsync(EntitiesDbContext db, TEntity entity, CancellationToken cancellationToken) =>
         Task.CompletedTask;
 
@@ -44,6 +50,8 @@ public abstract class BaseManageService<TModel, TEntity, TFilter, TQuery>(
 
         await db.Set<TEntity>().AddAsync(entity, cancellationToken);
 
+        await ValidateCreateAsync(db, entity, cancellationToken);
+
         try
         {
             await db.CommitTransactionAsync(cancellationToken);
@@ -64,6 +72,8 @@ public abstract class BaseManageService<TModel, TEntity, TFilter, TQuery>(
 
         var entity = await FindEntity(db, filter, asNoTracking: false, cancellationToken)
             ?? throw new NotFoundException(GetNotFoundMessage(filter));
+
+        await ValidateUpdateAsync(db, entity, model, cancellationToken);
 
         mapper.MapData(model, entity);
 

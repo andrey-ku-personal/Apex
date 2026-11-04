@@ -85,6 +85,59 @@ namespace Apex.Portfolio.Migrations.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("Apex.Portfolio.Domain.Entities.Bond.BondOperation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("Id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BondId")
+                        .HasColumnType("int")
+                        .HasColumnName("BondId");
+
+                    b.Property<decimal>("Commission")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("Commission");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer")
+                        .HasColumnName("Count");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date")
+                        .HasColumnName("Date");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)")
+                        .HasColumnName("Price");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("Type");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BondId");
+
+                    b.HasIndex("UserId", "BondId", "Date");
+
+                    b.ToTable("BondOperations", (string)null);
+                });
+
             modelBuilder.Entity("Apex.Portfolio.Domain.Entities.FinancialMarket", b =>
                 {
                     b.Property<int>("Id")
@@ -170,6 +223,17 @@ namespace Apex.Portfolio.Migrations.Migrations
                     b.HasBaseType("Apex.Portfolio.Domain.Abstractions.InstrumentMetadata");
 
                     b.HasDiscriminator().HasValue((byte)2);
+                });
+
+            modelBuilder.Entity("Apex.Portfolio.Domain.Entities.Bond.BondOperation", b =>
+                {
+                    b.HasOne("Apex.Portfolio.Domain.Entities.Bond.Bond", "Bond")
+                        .WithMany()
+                        .HasForeignKey("BondId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Bond");
                 });
 
             modelBuilder.Entity("Apex.Portfolio.Domain.Entities.Bond.Bond", b =>

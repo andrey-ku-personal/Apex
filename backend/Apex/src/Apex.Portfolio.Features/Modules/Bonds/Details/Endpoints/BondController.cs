@@ -35,13 +35,4 @@ public class BondController(IBondService service) : SharedController
     [OpenApiTags("Bond")]
     public async Task<BondModel> Update([FromRoute] BondFilter filter, [FromBody] BondModel model, CancellationToken cancellationToken = default)
         => await service.Update(filter, model, cancellationToken);
-
-    [HttpDelete("Bond/Delete/{id:int}")]
-    [OpenApiOperation(
-        operationId: "Bond.Delete",
-        summary: "Delete Bond",
-        description: "Delete Bond by id")]
-    [OpenApiTags("Bond")]
-    public async Task Delete([FromRoute] BondFilter filter, CancellationToken cancellationToken = default)
-        => await service.Delete(filter, cancellationToken);
 }

@@ -1,4 +1,6 @@
 using Apex.Portfolio.Factories;
+using Apex.Portfolio.Features.Modules.BondOperations.Details.Services;
+using Apex.Portfolio.Features.Modules.BondOperations.List.Services;
 using Apex.Portfolio.Features.Modules.Bonds.Details.Models;
 using Apex.Portfolio.Features.Modules.Bonds.Details.Services;
 using Apex.Portfolio.Features.Modules.Bonds.List.Models;
@@ -25,6 +27,7 @@ public static class InjectionExtension
         RegisterMappers(services);
         RegisterInstrumentMetadata(services);
         RegisterBonds(services);
+        RegisterBondOperations(services);
     }
 
     private static void RegisterMappers(IServiceCollection services)
@@ -37,6 +40,8 @@ public static class InjectionExtension
             factory.RegisterMapper(() => new InstrumentMetadataModelMapper());
             factory.RegisterMapper(() => new BondModelMapper());
             factory.RegisterMapper(() => new BondListModelMapper());
+            factory.RegisterMapper(() => new Modules.BondOperations.Details.Models.BondOperationModelMapper());
+            factory.RegisterMapper(() => new Modules.BondOperations.List.Models.BondOperationListModelMapper());
 
             return factory;
         });
@@ -73,6 +78,21 @@ public static class InjectionExtension
         services.AddScoped<IBondListService>(sp =>
             new BondListDecorator(
                 sp.GetRequiredService<BondListService>(),
+                sp.GetRequiredService<IValidationRunner>()));
+    }
+
+    private static void RegisterBondOperations(IServiceCollection services)
+    {
+        services.AddScoped<BondOperationService>();
+        services.AddScoped<IBondOperationService>(sp =>
+            new BondOperationDecorator(
+                sp.GetRequiredService<BondOperationService>(),
+                sp.GetRequiredService<IValidationRunner>()));
+
+        services.AddScoped<BondOperationListService>();
+        services.AddScoped<IBondOperationListService>(sp =>
+            new BondOperationListDecorator(
+                sp.GetRequiredService<BondOperationListService>(),
                 sp.GetRequiredService<IValidationRunner>()));
     }
 }

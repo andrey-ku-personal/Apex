@@ -3,6 +3,7 @@ using Apex.Portfolio.Features.Modules.Bonds.Details.Filtering;
 using Apex.Portfolio.Features.Modules.Bonds.Details.Models;
 using Apex.Portfolio.Modules;
 using Apex.Portfolio.Persistance;
+using Apex.Shared.Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using BondEntity = Apex.Portfolio.Domain.Entities.Bond.Bond;
 
@@ -17,4 +18,7 @@ public class BondService(
         => context is BondFilter filter
             ? $"Bond was not found {filter.Id}"
             : "Bond was not found";
+
+    protected override Task ValidateDeleteAsync(EntitiesDbContext db, BondEntity entity, CancellationToken cancellationToken)
+        => throw new ConflictException("Bond deletion is not allowed: bonds are kept as immutable reference data");
 }
