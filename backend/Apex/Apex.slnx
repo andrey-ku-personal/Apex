@@ -15,14 +15,6 @@
     <Project Path="src/Apex.Users.Migrations/Apex.Users.Migrations.csproj" Id="f8b5d4ae-1104-4dfc-acda-08db13dce47e" />
     <Project Path="src/Apex.Users.Persistance/Apex.Users.Persistance.csproj" Id="55469e89-2a94-48f7-85e8-4772b82c4718" />
   </Folder>
-  <Folder Name="/Invest/">
-    <Project Path="src/Apex.Invest.Api/Apex.Invest.Api.csproj" />
-    <Project Path="src/Apex.Invest.Domain/Apex.Invest.Domain.csproj" />
-    <Project Path="src/Apex.Invest.Features.Tests/Apex.Invest.Features.Tests.csproj" />
-    <Project Path="src/Apex.Invest.Features/Apex.Invest.Features.csproj" Id="cccfed8c-634f-4f2d-a71b-84df4d85989f" />
-    <Project Path="src/Apex.Invest.Migrations/Apex.Invest.Migrations.csproj" />
-    <Project Path="src/Apex.Invest.Persistance/Apex.Invest.Persistance.csproj" />
-  </Folder>
   <Folder Name="/Shared/">
     <Project Path="src/Apex.Invest/Apex.Shared.Core/Apex.Shared.Core.csproj" />
     <Project Path="src/Apex.Shared.Models/Apex.Shared.Models.csproj" />
