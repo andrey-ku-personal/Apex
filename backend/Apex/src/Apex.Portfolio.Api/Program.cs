@@ -1,5 +1,5 @@
-using System.Security.Cryptography;
 using Apex.Portfolio.Features;
+using Apex.Portfolio.Features.Security;
 using Apex.Portfolio.Persistance;
 using Apex.Shared.Core.Extensions;
 using Apex.Shared.Core.Middleware;
@@ -47,14 +47,10 @@ static void RegisterServices(WebApplicationBuilder builder)
     builder.Services.AddSharedCors();
     builder.Services.AddSharedSwagger();
 
-    var publicKeyPem = builder.Configuration["Authentication:PublicKey"];
-    ArgumentException.ThrowIfNullOrWhiteSpace(publicKeyPem);
+    var publicKey = builder.Configuration["Authentication:PublicKey"];
+    ArgumentException.ThrowIfNullOrWhiteSpace(publicKey);
 
-    using var rsa = RSA.Create();
-    rsa.ImportFromPem(publicKeyPem);
-    var signingKey = new RsaSecurityKey(rsa.ExportParameters(includePrivateParameters: false));
-    if (signingKey.KeySize < 2048)
-        throw new InvalidOperationException("Authentication:PublicKey must be an RSA key of at least 2048 bits");
+    var signingKey = TokenService.CreateValidationKey(publicKey);
 
     builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
