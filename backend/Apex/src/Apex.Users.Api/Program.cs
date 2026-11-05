@@ -1,3 +1,4 @@
+using System.Threading.RateLimiting;
 using Apex.Shared.Core.Extensions;
 using Apex.Shared.Core.Middleware;
 using Apex.Shared.Core.Shared;
@@ -47,6 +48,20 @@ static void RegisterServices(WebApplicationBuilder builder)
     builder.Services.AddSharedCors();
     builder.Services.AddSharedSwagger("Apex.Users API", "Apex.Users API - authentication and user management");
 
+    builder.Services.AddRateLimiter(options =>
+    {
+        options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+        options.AddPolicy("auth", context => RateLimitPartition.GetSlidingWindowLimiter(
+            partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: _ => new SlidingWindowRateLimiterOptions
+            {
+                PermitLimit = 100,
+                Window = TimeSpan.FromMinutes(1),
+                SegmentsPerWindow = 6
+            }));
+    });
+
     var privateKeyPem = builder.Configuration["Authentication:PrivateKey"];
     ArgumentException.ThrowIfNullOrWhiteSpace(privateKeyPem);
 
@@ -81,6 +96,9 @@ static void ConfigureApplication(WebApplication app)
     app.UseMiddleware<ExceptionHandlingMiddleware>();
 
     app.UseHttpsRedirection();
+#if !DEBUG
+    app.UseRateLimiter();
+#endif
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();

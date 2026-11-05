@@ -2,7 +2,7 @@
 
 public class ValidationException : Exception
 {
-    public IReadOnlyDictionary<string, string[]> Errors { get; }
+    public IReadOnlyDictionary<string, string[]> Errors { get; } = new Dictionary<string, string[]>();
 
     public ValidationException() : base() { }
 

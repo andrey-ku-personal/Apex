@@ -117,7 +117,7 @@ public class Tests(SliceFixture fixture) : BaseTests(fixture)
     {
         var currency = await _dataService.Create(MetadataType.Currency);
 
-        var bondsDataService = new BondsDataService(fixture);
+        var bondsDataService = new BondsDataService(Fixture);
         await bondsDataService.Create(currencyId: currency.Id);
 
         await Should.ThrowAsync<ConflictException>(() => _dataService.Delete(currency.Id));

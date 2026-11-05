@@ -6,6 +6,7 @@ using Apex.Users.Features.Modules.Users.Details.Models;
 using Apex.Users.Features.Modules.Users.Details.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Apex.Users.Features.Modules.Auth;
 
@@ -17,14 +18,17 @@ public class AuthController(IAuthService authService, IUserService userService) 
     public Task<TokenModel> Register(RegisterModel model, CancellationToken cancellationToken) =>
         authService.Register(model, cancellationToken);
 
+    [EnableRateLimiting("auth")]
     [HttpPost("Login")]
     public Task<TokenModel> Login(LoginModel model, CancellationToken cancellationToken) =>
         authService.Login(model, cancellationToken);
 
+    [EnableRateLimiting("auth")]
     [HttpPost("Refresh")]
     public Task<TokenModel> Refresh(RefreshModel model, CancellationToken cancellationToken) =>
         authService.Refresh(model, cancellationToken);
 
+    [EnableRateLimiting("auth")]
     [HttpPost("Logout")]
     public async Task<IActionResult> Logout(RefreshModel model, CancellationToken cancellationToken)
     {
