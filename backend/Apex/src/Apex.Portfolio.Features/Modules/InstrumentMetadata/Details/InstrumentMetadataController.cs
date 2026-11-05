@@ -5,7 +5,7 @@ using Apex.Shared.Core.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 
-namespace Apex.Portfolio.Features.Modules.InstrumentMetadata.Details.Endpoints;
+namespace Apex.Portfolio.Features.Modules.InstrumentMetadata.Details;
 
 public class InstrumentMetadataController(IInstrumentMetadataService service) : SharedController
 {

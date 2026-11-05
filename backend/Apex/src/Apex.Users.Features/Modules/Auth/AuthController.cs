@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Apex.Shared.Core.Exceptions;
 using Apex.Users.Features.Modules.Auth.Models;
+using Apex.Users.Features.Modules.Auth.Services;
 using Apex.Users.Features.Modules.Users.Details.Models;
 using Apex.Users.Features.Modules.Users.Details.Services;
 using Microsoft.AspNetCore.Authorization;

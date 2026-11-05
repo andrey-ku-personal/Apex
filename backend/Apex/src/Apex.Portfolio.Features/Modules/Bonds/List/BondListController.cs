@@ -6,7 +6,7 @@ using Apex.Shared.Models.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 
-namespace Apex.Portfolio.Features.Modules.Bonds.List.Endpoints;
+namespace Apex.Portfolio.Features.Modules.Bonds.List;
 
 public class BondListController(IBondListService listService) : SharedController
 {

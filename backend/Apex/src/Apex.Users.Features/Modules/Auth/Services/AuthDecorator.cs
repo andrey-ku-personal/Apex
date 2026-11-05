@@ -1,7 +1,7 @@
 using Apex.Shared.Core.Services;
 using Apex.Users.Features.Modules.Auth.Models;
 
-namespace Apex.Users.Features.Modules.Auth;
+namespace Apex.Users.Features.Modules.Auth.Services;
 
 public sealed class AuthDecorator(AuthService authService, IValidationRunner validationRunner) : IAuthService
 {

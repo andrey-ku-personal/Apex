@@ -1,5 +1,4 @@
 using Apex.Users.Domain.Entities;
-using Apex.Users.Features.Modules.Auth;
 using Apex.Users.Features.Modules.Auth.Models;
 using Apex.Users.Features.Modules.Users.Details.Models;
 using Apex.Users.Features.Modules.Users.Details.Services;
@@ -8,10 +7,10 @@ using Apex.Users.Features.Modules.Users.List.Services;
 using Apex.Shared.Core.Services;
 using Apex.Users.Features.Security;
 using Apex.Users.Persistance;
-using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Apex.Users.Features.Modules.Auth.Services;
 
 namespace Apex.Users.Features;
 
@@ -30,6 +29,9 @@ public static class InjectionExtension
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = false;
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
             })
             .AddRoles<UserRole>()
             .AddRoleManager<RoleManager<UserRole>>()

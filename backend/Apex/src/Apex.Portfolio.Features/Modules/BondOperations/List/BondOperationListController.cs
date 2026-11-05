@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 
-namespace Apex.Portfolio.Features.Modules.BondOperations.List.Endpoints;
+namespace Apex.Portfolio.Features.Modules.BondOperations.List;
 
 [Authorize]
 public class BondOperationListController(IBondOperationListService listService) : SharedController

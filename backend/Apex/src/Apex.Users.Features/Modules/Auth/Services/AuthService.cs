@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace Apex.Users.Features.Modules.Auth;
+namespace Apex.Users.Features.Modules.Auth.Services;
 
 public sealed class AuthService(
     UserManager<User> users,
@@ -40,7 +40,9 @@ public sealed class AuthService(
         var user = await users.FindByEmailAsync(model.Email)
             ?? throw new UnauthorizedException("Invalid email or password");
 
-        var result = await signIn.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: false);
+        var result = await signIn.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: true);
+        if (result.IsLockedOut)
+            throw new UnauthorizedException("User is locked out. Try again later");
         if (!result.Succeeded)
             throw new UnauthorizedException("Invalid email or password");
 

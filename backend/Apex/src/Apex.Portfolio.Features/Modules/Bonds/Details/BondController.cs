@@ -5,7 +5,7 @@ using Apex.Shared.Core.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 
-namespace Apex.Portfolio.Features.Modules.Bonds.Details.Endpoints;
+namespace Apex.Portfolio.Features.Modules.Bonds.Details;
 
 public class BondController(IBondService service) : SharedController
 {

@@ -6,7 +6,7 @@ using Apex.Shared.Models.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 
-namespace Apex.Portfolio.Features.Modules.InstrumentMetadata.List.Endpoints;
+namespace Apex.Portfolio.Features.Modules.InstrumentMetadata.List;
 
 public class InstrumentMetadataListController(IInstrumentMetadataListService listService) : SharedController
 {

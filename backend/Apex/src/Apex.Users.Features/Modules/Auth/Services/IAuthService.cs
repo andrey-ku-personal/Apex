@@ -1,6 +1,6 @@
 using Apex.Users.Features.Modules.Auth.Models;
 
-namespace Apex.Users.Features.Modules.Auth;
+namespace Apex.Users.Features.Modules.Auth.Services;
 
 public interface IAuthService
 {

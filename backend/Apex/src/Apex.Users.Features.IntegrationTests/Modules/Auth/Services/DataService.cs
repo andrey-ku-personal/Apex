@@ -1,5 +1,5 @@
-using Apex.Users.Features.Modules.Auth;
 using Apex.Users.Features.Modules.Auth.Models;
+using Apex.Users.Features.Modules.Auth.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Apex.Users.Features.IntegrationTests.Modules.Auth.Services;
