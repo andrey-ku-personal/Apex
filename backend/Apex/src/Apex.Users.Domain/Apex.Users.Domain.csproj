@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Apex.Invest\Apex.Shared.Core\Apex.Shared.Core.csproj" />
+    <ProjectReference Include="..\Apex.Shared.Core\Apex.Shared.Core.csproj" />
   </ItemGroup>
 
 </Project>

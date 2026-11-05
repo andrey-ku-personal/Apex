@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Apex.Invest\Apex.Shared.Core\Apex.Shared.Core.csproj" />
+    <ProjectReference Include="..\Apex.Shared.Core\Apex.Shared.Core.csproj" />
     <ProjectReference Include="..\Apex.Shared.Models\Apex.Shared.Models.csproj" />
     <ProjectReference Include="..\Apex.Users.Domain\Apex.Users.Domain.csproj" />
     <ProjectReference Include="..\Apex.Users.Persistance\Apex.Users.Persistance.csproj" />

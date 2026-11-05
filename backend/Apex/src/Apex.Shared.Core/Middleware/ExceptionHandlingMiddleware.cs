@@ -14,6 +14,13 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Ex
         }
         catch (Exception exception)
         {
+            if (exception is ValidationException { Errors.Count: > 0 } validation)
+            {
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.Response.WriteAsJsonAsync(new { errors = validation.Errors });
+                return;
+            }
+
             var (statusCode, errors) = exception switch
             {
                 ValidationException => (StatusCodes.Status400BadRequest, new[] { exception.Message }),

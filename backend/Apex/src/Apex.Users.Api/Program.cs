@@ -45,7 +45,7 @@ static void RegisterServices(WebApplicationBuilder builder)
     builder.Services.AddPersistenceDependencies(builder.Configuration);
     builder.Services.AddFeaturesDependencies(builder.Configuration);
     builder.Services.AddSharedCors();
-    builder.Services.AddSharedSwagger();
+    builder.Services.AddSharedSwagger("Apex.Users API", "Apex.Users API - authentication and user management");
 
     var privateKeyPem = builder.Configuration["Authentication:PrivateKey"];
     ArgumentException.ThrowIfNullOrWhiteSpace(privateKeyPem);

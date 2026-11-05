@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Apex.Shared.Models\Apex.Shared.Models.csproj" />
+    <ProjectReference Include="..\Apex.Shared.Models\Apex.Shared.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

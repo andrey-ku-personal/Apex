@@ -35,7 +35,19 @@ public class ExceptionHandlerAttribute : ExceptionFilterAttribute
     private static void HandleNotFound(ExceptionContext context)
         => SetProblem(context, HttpStatusCode.NotFound, context.Exception.Message);
 
-    private static void HandleNotValid(ExceptionContext context) => HandleBadRequest(context);
+    private static void HandleNotValid(ExceptionContext context)
+    {
+        if (context.Exception is not ValidationException validation || validation.Errors.Count == 0)
+        {
+            HandleBadRequest(context);
+            return;
+        }
+
+        var problem = CreateProblem(context, HttpStatusCode.BadRequest, "Validation failed");
+        problem.Extensions["errors"] = validation.Errors;
+        context.Result = new ObjectResult(problem) { StatusCode = (int)HttpStatusCode.BadRequest };
+        context.ExceptionHandled = true;
+    }
 
     private static void HandleBadRequest(ExceptionContext context)
         => SetProblem(context, HttpStatusCode.BadRequest, context.Exception.Message);
@@ -49,7 +61,7 @@ public class ExceptionHandlerAttribute : ExceptionFilterAttribute
     private static void HandleInternalError(ExceptionContext context)
         => SetProblem(context, HttpStatusCode.InternalServerError, "Internal Server Error");
 
-    private static void SetProblem(ExceptionContext context, HttpStatusCode status, string title, string? detail = null)
+    private static ProblemDetails CreateProblem(ExceptionContext context, HttpStatusCode status, string title)
     {
         var traceId = context.HttpContext.TraceIdentifier;
         var correlationId = context.HttpContext.Request.Headers["X-Correlation-Id"].FirstOrDefault();
@@ -59,7 +71,6 @@ public class ExceptionHandlerAttribute : ExceptionFilterAttribute
             Status = (int)status,
             Type = $"https://httpstatuses.com/{(int)status}",
             Title = title,
-            Detail = detail,
             Instance = context.HttpContext.Request.Path
         };
 
@@ -67,6 +78,13 @@ public class ExceptionHandlerAttribute : ExceptionFilterAttribute
         if (!string.IsNullOrWhiteSpace(correlationId))
             problem.Extensions["correlationId"] = correlationId;
 
+        return problem;
+    }
+
+    private static void SetProblem(ExceptionContext context, HttpStatusCode status, string title, string? detail = null)
+    {
+        var problem = CreateProblem(context, status, title);
+        problem.Detail = detail;
         context.Result = new ObjectResult(problem) { StatusCode = (int)status };
         context.ExceptionHandled = true;
     }

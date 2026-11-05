@@ -16,7 +16,7 @@
     <Project Path="src/Apex.Users.Persistance/Apex.Users.Persistance.csproj" Id="55469e89-2a94-48f7-85e8-4772b82c4718" />
   </Folder>
   <Folder Name="/Shared/">
-    <Project Path="src/Apex.Invest/Apex.Shared.Core/Apex.Shared.Core.csproj" />
+    <Project Path="src/Apex.Shared.Core/Apex.Shared.Core.csproj" />
     <Project Path="src/Apex.Shared.Models/Apex.Shared.Models.csproj" />
   </Folder>
 </Solution>

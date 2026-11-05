@@ -1,4 +1,3 @@
-using Apex.Shared.Core.Exceptions;
 using FluentValidation;
 
 namespace Apex.Shared.Core.Services;
@@ -14,6 +13,8 @@ public sealed class ValidationRunner(IServiceProvider serviceProvider) : IValida
 
         var result = await ((IValidator<TModel>)validator).ValidateAsync(model, cancellationToken);
         if (!result.IsValid)
-            throw new Exceptions.ValidationException(string.Join("; ", result.Errors.Select(x => x.ErrorMessage)));
+            throw new Exceptions.ValidationException(result.Errors
+                .GroupBy(x => x.PropertyName)
+                .ToDictionary(x => x.Key, x => x.Select(e => e.ErrorMessage).ToArray()));
     }
 }

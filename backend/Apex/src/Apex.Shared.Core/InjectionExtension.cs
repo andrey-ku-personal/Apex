@@ -50,15 +50,15 @@ public static class InjectionExtension
         });
     }
 
-    public static void AddSharedSwagger(this IServiceCollection services)
+    public static void AddSharedSwagger(this IServiceCollection services, string title, string description)
     {
         services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Apex.Invest API",
+                Title = title,
                 Version = "v1",
-                Description = "Apex.Invest API",
+                Description = description,
                 Contact = new OpenApiContact
                 {
                     Name = "Andrey"

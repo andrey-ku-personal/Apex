@@ -24,7 +24,7 @@ static void RegisterServices(WebApplicationBuilder builder)
     builder.Services.AddPersistenceDependencies(builder.Configuration);
     builder.Services.AddFeaturesDependencies(builder.Configuration);
     builder.Services.AddSharedCors();
-    builder.Services.AddSharedSwagger();
+    builder.Services.AddSharedSwagger("Apex.Portfolio API", "Apex.Portfolio API - integration test host");
 }
 
 static void ConfigureApplication(WebApplication app)

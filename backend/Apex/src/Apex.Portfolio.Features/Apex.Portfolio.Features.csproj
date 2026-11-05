@@ -13,7 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Apex.Portfolio.Domain\Apex.Portfolio.Domain.csproj" />
     <ProjectReference Include="..\Apex.Portfolio.Persistance\Apex.Portfolio.Persistance.csproj" />
-    <ProjectReference Include="..\Apex.Invest\Apex.Shared.Core\Apex.Shared.Core.csproj" />
+    <ProjectReference Include="..\Apex.Shared.Core\Apex.Shared.Core.csproj" />
     <ProjectReference Include="..\Apex.Shared.Models\Apex.Shared.Models.csproj" />
   </ItemGroup>
 
