@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Apex.Portfolio/">
     <Project Path="src/Apex.Portfolio.Api/Apex.Portfolio.Api.csproj" Id="ded59b40-5595-4613-9895-4f9cfb125983" />
+    <Project Path="src/Apex.Portfolio.DataGenerator/Apex.Portfolio.DataGenerator.csproj" Id="80fab50f-d4bc-48c3-b502-4ff2eddc9a1a" />
     <Project Path="src/Apex.Portfolio.Domain/Apex.Portfolio.Domain.csproj" Id="6df59795-e144-400b-98f3-a9301f1e3285" />
     <Project Path="src/Apex.Portfolio.Features.IntegrationTests/Apex.Portfolio.Features.IntegrationTests.csproj" Id="bef2ac11-5401-43fb-9019-57e59c65795a" />
     <Project Path="src/Apex.Portfolio.Features/Apex.Portfolio.Features.csproj" Id="e1d61375-64e1-4272-8e5d-fceabcff129d" />
