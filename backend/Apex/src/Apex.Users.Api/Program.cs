@@ -52,13 +52,15 @@ static void RegisterServices(WebApplicationBuilder builder)
     {
         options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
-        options.AddPolicy("auth", context => RateLimitPartition.GetSlidingWindowLimiter(
+        options.AddPolicy("auth", context => RateLimitPartition.GetTokenBucketLimiter(
             partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
-            factory: _ => new SlidingWindowRateLimiterOptions
+            factory: _ => new TokenBucketRateLimiterOptions
             {
-                PermitLimit = 100,
-                Window = TimeSpan.FromMinutes(1),
-                SegmentsPerWindow = 6
+                TokenLimit = 100,
+                TokensPerPeriod = 1,
+                ReplenishmentPeriod = TimeSpan.FromMilliseconds(600),
+                QueueLimit = 0,
+                AutoReplenishment = true
             }));
     });
 
