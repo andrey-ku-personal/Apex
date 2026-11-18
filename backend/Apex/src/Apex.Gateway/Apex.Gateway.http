@@ -1,0 +1,6 @@
+@Apex.Gateway_HostAddress = http://localhost:5022
+
+GET {{Apex.Gateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

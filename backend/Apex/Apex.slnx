@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Apex.Gateway/">
+    <Project Path="src/Apex.Gateway/Apex.Gateway.csproj" Id="ff3ebdc2-d79b-40ed-9744-a7dcc0d19a3c" />
+  </Folder>
   <Folder Name="/Apex.Portfolio/">
     <Project Path="src/Apex.Portfolio.Api/Apex.Portfolio.Api.csproj" Id="ded59b40-5595-4613-9895-4f9cfb125983" />
     <Project Path="src/Apex.Portfolio.DataGenerator/Apex.Portfolio.DataGenerator.csproj" Id="80fab50f-d4bc-48c3-b502-4ff2eddc9a1a" />
