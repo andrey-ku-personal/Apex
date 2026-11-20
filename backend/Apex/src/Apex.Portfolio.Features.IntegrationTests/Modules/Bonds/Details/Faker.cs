@@ -1,10 +1,10 @@
-using Apex.Portfolio.Features.Modules.Bonds.Details.Models;
+using Apex.Portfolio.Features.Modules.Bonds.Details;
 
 namespace Apex.Portfolio.Features.IntegrationTests.Modules.Bonds.Details;
 
 public static class Faker
 {
-    public static BondModel FakeModel(int currencyId, int paymentFrequencyId, int id = 0) => new Bogus.Faker<BondModel>()
+    public static T FakeModel<T>(int currencyId, int paymentFrequencyId, int id = 0) where T : BondModel, new() => new Bogus.Faker<T>()
         .RuleFor(m => m.Id, _ => id)
         .RuleFor(m => m.Ticker, f => $"BND_{f.Random.String2(8, "ABCDEFGHIJKLMNOPQRSTUVWXYZ")}")
         .RuleFor(m => m.Issuer, f => f.Company.CompanyName())

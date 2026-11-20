@@ -111,7 +111,7 @@ public class Tests(SliceFixture fixture) : BaseTests(fixture)
     {
         var tokens = await _dataService.Register();
 
-        await fixture.ExecuteScopeAsync(async sp =>
+        await Fixture.ExecuteScopeAsync(async sp =>
         {
             var db = sp.GetRequiredService<UsersDbContext>();
             var hash = sp.GetRequiredService<ITokenService>().HashToken(tokens.RefreshToken);
@@ -123,7 +123,7 @@ public class Tests(SliceFixture fixture) : BaseTests(fixture)
 
         await Should.ThrowAsync<UnauthorizedException>(() => _dataService.Refresh(tokens.RefreshToken));
 
-        await fixture.ExecuteScopeAsync(async sp =>
+        await Fixture.ExecuteScopeAsync(async sp =>
         {
             var db = sp.GetRequiredService<UsersDbContext>();
             var hash = sp.GetRequiredService<ITokenService>().HashToken(tokens.RefreshToken);

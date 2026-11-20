@@ -23,6 +23,8 @@ public class SliceFixture : IAsyncLifetime
         _scopeFactory = _factory.Services.GetRequiredService<IServiceScopeFactory>();
     }
 
+    public HttpClient CreateClient() => _factory.CreateClient();
+
     public async Task InitializeAsync()
     {
         using var scope = _scopeFactory.CreateScope();
