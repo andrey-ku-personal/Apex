@@ -1,3 +1,4 @@
+using Apex.Gateway;
 using Apex.Shared.Core.Extensions;
 using Apex.Shared.Core.Middleware;
 using NLog;
@@ -33,6 +34,8 @@ finally
 
 static void RegisterServices(WebApplicationBuilder builder)
 {
+    builder.Services.AddAuthRateLimiter();
+
     builder.Services.AddReverseProxy()
         .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 }
@@ -42,6 +45,8 @@ static void ConfigureApplication(WebApplication app)
     app.UseMiddleware<ExceptionHandlingMiddleware>();
     app.UseMiddleware<CorrelationIdMiddleware>();
     app.UseMiddleware<RequestLoggingMiddleware>();
+
+    app.UseRateLimiter();
 
     app.MapReverseProxy();
 }

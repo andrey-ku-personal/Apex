@@ -1,4 +1,3 @@
-using System.Threading.RateLimiting;
 using Apex.Shared.Core.Extensions;
 using Apex.Shared.Core.Middleware;
 using Apex.Shared.Core.Shared;
@@ -48,22 +47,6 @@ static void RegisterServices(WebApplicationBuilder builder)
     builder.Services.AddSharedCors();
     builder.Services.AddSharedSwagger("Apex.Users API", "Apex.Users API - authentication and user management");
 
-    builder.Services.AddRateLimiter(options =>
-    {
-        options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
-
-        options.AddPolicy("auth", context => RateLimitPartition.GetTokenBucketLimiter(
-            partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
-            factory: _ => new TokenBucketRateLimiterOptions
-            {
-                TokenLimit = 100,
-                TokensPerPeriod = 1,
-                ReplenishmentPeriod = TimeSpan.FromMilliseconds(600),
-                QueueLimit = 0,
-                AutoReplenishment = true
-            }));
-    });
-
     var privateKeyPem = builder.Configuration["Authentication:PrivateKey"];
     ArgumentException.ThrowIfNullOrWhiteSpace(privateKeyPem);
 
@@ -98,9 +81,6 @@ static void ConfigureApplication(WebApplication app)
     app.UseMiddleware<ExceptionHandlingMiddleware>();
 
     app.UseHttpsRedirection();
-#if !DEBUG
-    app.UseRateLimiter();
-#endif
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
