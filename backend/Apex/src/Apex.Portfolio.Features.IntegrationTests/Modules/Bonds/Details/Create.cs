@@ -17,7 +17,7 @@ public class CreateTests(SliceFixture fixture) : BaseTests(fixture)
         var created = await _dataService.Create();
 
         created.Id.ShouldBeGreaterThan(0);
-        (await _dataService.Get(created.Id)).Ticker.ShouldBe(created.Ticker);
+        (await _dataService.Get(created.Id, created.UserId)).Ticker.ShouldBe(created.Ticker);
     }
 
     [Fact]

@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using System.Security.Claims;
 using Apex.Portfolio.Factories;
 using Apex.Portfolio.Persistance;
 using Apex.Shared.Core.Controllers;
@@ -7,6 +8,7 @@ using Apex.Shared.Core.Pagination.Models;
 using Apex.Shared.Core.Services;
 using Apex.Shared.Models.Pagination;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NSwag.Annotations;
@@ -17,6 +19,7 @@ namespace Apex.Portfolio.Features.Modules.Bonds.Details;
 
 public class GetListFilter : PageFilter
 {
+    public string UserId { get; set; } = null!;
     public int? CurrencyId { get; set; }
     public int? PaymentFrequencyId { get; set; }
 }
@@ -25,6 +28,7 @@ public class GetListFilterValidator : AbstractValidator<GetListFilter>
 {
     public GetListFilterValidator()
     {
+        RuleFor(x => x.UserId).NotNull().NotEmpty().MaximumLength(64);
         RuleFor(x => x.PageNumber).GreaterThanOrEqualTo(0);
         RuleFor(x => x.PageSize).InclusiveBetween(1, 100);
         RuleFor(x => x.FreeText).MaximumLength(64);
@@ -70,26 +74,32 @@ public class GetListHandler(
         => mapper.MapToModel(entities);
 }
 
+[Authorize]
 public class GetListController(GetListHandler handler) : SharedController
 {
     [HttpPost("Bond/Get/List")]
     [OpenApiOperation(
         operationId: "Bond.Get/List",
         summary: "Get List Bonds",
-        description: "Get paginated list of Bonds (shared bond library)")]
+        description: "Get paginated list of own Bonds")]
     [OpenApiTags("Bond")]
     public async Task<PageDataResponse<BondListModel>> GetList([FromBody] GetListFilter filter, CancellationToken cancellationToken = default)
-        => await handler.Handle(filter, cancellationToken);
+    {
+        filter.UserId = User.FindFirstValue("sub")!;
+        return await handler.Handle(filter, cancellationToken);
+    }
 }
 
 public class BondListQuery : BaseSortQuery<BondEntity>
 {
+    public string UserId { get; set; } = null!;
     public int? CurrencyId { get; set; }
     public int? PaymentFrequencyId { get; set; }
     public string? FreeText { get; set; }
 
     public override Expression<Func<BondEntity, bool>> GetExpression()
         => bond =>
+            bond.UserId == UserId &&
             (CurrencyId == null || bond.CurrencyId == CurrencyId) &&
             (PaymentFrequencyId == null || bond.PaymentFrequencyId == PaymentFrequencyId) &&
             (string.IsNullOrWhiteSpace(FreeText) ||

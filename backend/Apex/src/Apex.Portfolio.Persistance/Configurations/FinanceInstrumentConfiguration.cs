@@ -19,6 +19,13 @@ public class FinanceInstrumentConfiguration : IEntityTypeConfiguration<FinanceIn
             .ValueGeneratedOnAdd()
             .IsRequired();
 
+        builder.Property(p => p.UserId)
+            .HasColumnName("UserId")
+            .HasMaxLength(64)
+            .IsRequired();
+
+        builder.HasIndex(x => x.UserId);
+
         builder.Property(p => p.Ticker)
             .HasColumnName("Ticker")
             .HasColumnType("character varying(64)")

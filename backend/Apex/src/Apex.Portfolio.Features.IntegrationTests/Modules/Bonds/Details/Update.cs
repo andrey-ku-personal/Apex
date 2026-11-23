@@ -15,7 +15,7 @@ public class UpdateTests(SliceFixture fixture) : BaseTests(fixture)
     {
         var model = Faker.FakeModel<UpdateRequest>(1, 1);
 
-        var exception = await Should.ThrowAsync<NotFoundException>(() => _dataService.Update(999_999, model));
+        var exception = await Should.ThrowAsync<NotFoundException>(() => _dataService.Update(999_999, Faker.FakeUserId(), model));
 
         exception.Message.ShouldBe("Bond was not found 999999");
     }
@@ -29,10 +29,10 @@ public class UpdateTests(SliceFixture fixture) : BaseTests(fixture)
         update.Ticker = $"UPD_{Guid.NewGuid():N}";
         update.Rate = 9.99m;
 
-        var updated = await _dataService.Update(created.Id, update);
+        var updated = await _dataService.Update(created.Id, created.UserId, update);
 
         updated.Id.ShouldBe(created.Id);
-        (await _dataService.Get(created.Id)).Ticker.ShouldBe(update.Ticker);
-        (await _dataService.Get(created.Id)).Rate.ShouldBe(9.99m);
+        (await _dataService.Get(created.Id, created.UserId)).Ticker.ShouldBe(update.Ticker);
+        (await _dataService.Get(created.Id, created.UserId)).Rate.ShouldBe(9.99m);
     }
 }

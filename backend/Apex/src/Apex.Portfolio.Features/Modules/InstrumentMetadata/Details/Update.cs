@@ -5,6 +5,7 @@ using Apex.Shared.Core.Exceptions;
 using Apex.Shared.Core.Pagination;
 using Apex.Shared.Core.Services;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NSwag.Annotations;
@@ -55,6 +56,7 @@ public class UpdateHandler(
         => mapper.MapToModel(entity);
 }
 
+[Authorize]
 public class UpdateController(UpdateHandler handler) : SharedController
 {
     [HttpPut("InstrumentMetadata/Update/{id:int}")]

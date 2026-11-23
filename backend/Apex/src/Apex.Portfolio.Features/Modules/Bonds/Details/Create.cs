@@ -1,13 +1,16 @@
+using System.Security.Claims;
 using Apex.Portfolio.Factories;
 using Apex.Portfolio.Persistance;
 using Apex.Shared.Core.Controllers;
 using Apex.Shared.Core.Services;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NSwag.Annotations;
 using Riok.Mapperly.Abstractions;
 using BondEntity = Apex.Portfolio.Domain.Entities.Bond.Bond;
+using ValidationException = Apex.Shared.Core.Exceptions.ValidationException;
 
 namespace Apex.Portfolio.Features.Modules.Bonds.Details;
 
@@ -55,16 +58,29 @@ public class CreateHandler(
 
     protected override BondModel MapToModel(BondEntity entity)
         => mapper.MapToModel(entity);
+
+    protected override async Task Validate(CreateRequest request, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(request.UserId))
+            throw new ValidationException(new Dictionary<string, string[]>
+            { ["UserId"] = ["'UserId' must not be empty."] });
+
+        await Validation.ValidateAsync(request, cancellationToken);
+    }
 }
 
+[Authorize]
 public class CreateController(CreateHandler handler) : SharedController
 {
     [HttpPost("Bond/Create")]
     [OpenApiOperation(
         operationId: "Bond.Create",
         summary: "Create Bond",
-        description: "Create new Bond in the shared bond library")]
+        description: "Create new Bond for the current user")]
     [OpenApiTags("Bond")]
     public async Task<BondModel> Create([FromBody] CreateRequest request, CancellationToken cancellationToken = default)
-        => await handler.Handle(request, cancellationToken);
+    {
+        request.UserId = User.FindFirstValue("sub")!;
+        return await handler.Handle(request, cancellationToken);
+    }
 }

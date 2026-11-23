@@ -15,7 +15,7 @@ public class GetTests(SliceFixture fixture) : BaseTests(fixture)
     {
         var created = await _dataService.Create();
 
-        var result = await _dataService.Get(created.Id);
+        var result = await _dataService.Get(created.Id, created.UserId);
 
         result.ShouldNotBeNull();
         result.Id.ShouldBe(created.Id);
@@ -30,9 +30,19 @@ public class GetTests(SliceFixture fixture) : BaseTests(fixture)
     [Fact]
     public async Task ShouldThrowNotFoundForMissingId()
     {
-        var exception = await Should.ThrowAsync<NotFoundException>(() => _dataService.Get(999_999));
+        var exception = await Should.ThrowAsync<NotFoundException>(() => _dataService.Get(999_999, Faker.FakeUserId()));
 
         exception.Message.ShouldBe("Bond was not found 999999");
+    }
+
+    [Fact]
+    public async Task ShouldThrowNotFoundForForeignUser()
+    {
+        var created = await _dataService.Create();
+
+        var exception = await Should.ThrowAsync<NotFoundException>(() => _dataService.Get(created.Id, Faker.FakeUserId()));
+
+        exception.Message.ShouldBe($"Bond was not found {created.Id}");
     }
 
     [Fact]

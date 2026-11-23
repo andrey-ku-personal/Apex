@@ -47,7 +47,15 @@ namespace Apex.Portfolio.Migrations.Migrations
                         .HasColumnType("character varying(64)")
                         .HasColumnName("Ticker");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("FinanceInstrument", (string)null);
 

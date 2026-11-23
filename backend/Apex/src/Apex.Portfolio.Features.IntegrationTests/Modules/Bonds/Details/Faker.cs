@@ -4,8 +4,11 @@ namespace Apex.Portfolio.Features.IntegrationTests.Modules.Bonds.Details;
 
 public static class Faker
 {
+    public static string FakeUserId() => $"usr_{Guid.NewGuid():N}";
+
     public static T FakeModel<T>(int currencyId, int paymentFrequencyId, int id = 0) where T : BondModel, new() => new Bogus.Faker<T>()
         .RuleFor(m => m.Id, _ => id)
+        .RuleFor(m => m.UserId, _ => FakeUserId())
         .RuleFor(m => m.Ticker, f => $"BND_{f.Random.String2(8, "ABCDEFGHIJKLMNOPQRSTUVWXYZ")}")
         .RuleFor(m => m.Issuer, f => f.Company.CompanyName())
         .RuleFor(m => m.CurrencyId, _ => currencyId)

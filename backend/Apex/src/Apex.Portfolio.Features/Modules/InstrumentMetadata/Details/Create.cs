@@ -6,6 +6,7 @@ using Apex.Shared.Core.Controllers;
 using Apex.Shared.Core.Exceptions;
 using Apex.Shared.Core.Services;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NSwag.Annotations;
@@ -51,6 +52,7 @@ public class CreateHandler(
         => mapper.MapToModel(entity);
 }
 
+[Authorize]
 public class CreateController(CreateHandler handler) : SharedController
 {
     [HttpPost("InstrumentMetadata/Create")]

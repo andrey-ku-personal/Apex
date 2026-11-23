@@ -3,6 +3,7 @@
 public abstract class FinanceInstrument : AnalyticalEntity
 {
     public int Id { get; set; }
+    public string UserId { get; set; } = null!;
     public string Ticker { get; set; } = default!;
     public string Issuer { get; set; } = default!;
 }

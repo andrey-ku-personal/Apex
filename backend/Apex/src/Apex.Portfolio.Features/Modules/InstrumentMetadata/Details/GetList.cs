@@ -9,6 +9,7 @@ using Apex.Shared.Core.Pagination.Models;
 using Apex.Shared.Core.Services;
 using Apex.Shared.Models.Pagination;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NSwag.Annotations;
@@ -67,6 +68,7 @@ public class GetListHandler(
         => mapper.MapToModel(entities);
 }
 
+[Authorize]
 public class GetListController(GetListHandler handler) : SharedController
 {
     [HttpPost("InstrumentMetadata/Get/List")]

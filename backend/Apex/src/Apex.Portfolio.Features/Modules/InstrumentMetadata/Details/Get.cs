@@ -3,6 +3,7 @@ using Apex.Portfolio.Factories;
 using Apex.Portfolio.Persistance;
 using Apex.Shared.Core.Controllers;
 using Apex.Shared.Core.Pagination;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NSwag.Annotations;
@@ -24,6 +25,7 @@ public class GetHandler(
         => mapper.MapToModel(entity);
 }
 
+[Authorize]
 public class GetController(GetHandler handler) : SharedController
 {
     [HttpGet("InstrumentMetadata/Get/{id:int}")]

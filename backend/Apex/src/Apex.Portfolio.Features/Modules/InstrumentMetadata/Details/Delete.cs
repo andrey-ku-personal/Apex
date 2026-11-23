@@ -2,6 +2,7 @@ using Apex.Portfolio.Persistance;
 using Apex.Shared.Core.Controllers;
 using Apex.Shared.Core.Exceptions;
 using Apex.Shared.Core.Pagination.Expressions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NSwag.Annotations;
@@ -42,6 +43,7 @@ public class DeleteHandler(IDbContextFactory<EntitiesDbContext> dbFactory)
     }
 }
 
+[Authorize]
 public class DeleteController(DeleteHandler handler) : SharedController
 {
     [HttpDelete("InstrumentMetadata/Delete/{id:int}")]

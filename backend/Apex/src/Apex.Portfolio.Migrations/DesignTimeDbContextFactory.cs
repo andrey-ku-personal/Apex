@@ -1,6 +1,7 @@
-﻿using Apex.Portfolio.Persistance;
+using Apex.Portfolio.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace Apex.Portfolio.Migrations;
 
@@ -8,8 +9,15 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<EntitiesDb
 {
     public EntitiesDbContext CreateDbContext(string[] args)
     {
-        var connectionString = Environment.GetEnvironmentVariable("DefaultConnection")
-            ?? throw new InvalidOperationException($@"Environment variable DefaultConnection is not set.");
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: true)
+            .AddEnvironmentVariables()
+            .Build();
+
+        var connectionString = configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException(
+                @"Connection string DefaultConnection is not set: add ConnectionStrings:DefaultConnection to appsettings.json.");
 
         var optionsBuilder = new DbContextOptionsBuilder<EntitiesDbContext>();
 
@@ -20,9 +28,10 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<EntitiesDb
     }
 }
 
-/*  
- *  Use next commands to support new migrations and update the DB
- *  $env:DefaultConnection = 'Host=localhost;Port=5432;Database=Apex.Portfolio;Username=postgres;Password=<your-password>'
- *  dotnet ef migrations add InitBaseTables --project src/Apex.Portfolio.Migrations --startup-project src/Apex.Portfolio.Migrations --context EntitiesDbContext
- *  dotnet ef database update --project src/Apex.Portfolio.Migrations --startup-project src/Apex.Portfolio.Migrations --context EntitiesDbContext
+/*
+    Use next commands to support new migrations and update the DB.
+    The connection string is read from appsettings.json; the ConnectionStrings__DefaultConnection environment variable overrides it.
+
+    dotnet ef migrations add MigrationName --project src/Apex.Portfolio.Migrations --startup-project src/Apex.Portfolio.Migrations --context EntitiesDbContext
+    dotnet ef database update --project src/Apex.Portfolio.Migrations --startup-project src/Apex.Portfolio.Migrations --context EntitiesDbContext
  */
