@@ -46,11 +46,16 @@ static void RegisterServices(WebApplicationBuilder builder)
     builder.Services.AddFeaturesDependencies(builder.Configuration);
     builder.Services.AddSharedCors();
     builder.Services.AddSharedSwagger("Apex.Users API", "Apex.Users API - authentication and user management");
+    AuthServiceSetup(builder);
+    builder.Services.AddHealthChecks();
+}
 
-    var privateKeyPem = builder.Configuration["Authentication:PrivateKey"];
-    ArgumentException.ThrowIfNullOrWhiteSpace(privateKeyPem);
+static void AuthServiceSetup(WebApplicationBuilder builder)
+{
+    var privateKey = builder.Configuration["Authentication:PrivateKey"];
+    ArgumentException.ThrowIfNullOrWhiteSpace(privateKey);
 
-    var signingKey = TokenService.CreateSigningKey(privateKeyPem);
+    var signingKey = TokenService.CreateSigningKey(privateKey);
     if (signingKey.KeySize < 2048)
         throw new InvalidOperationException("Authentication:PrivateKey must be an RSA key of at least 2048 bits");
 
@@ -87,6 +92,8 @@ static void ConfigureApplication(WebApplication app)
 
     app.UseMiddleware<CorrelationIdMiddleware>();
     app.UseMiddleware<RequestLoggingMiddleware>();
+
+    app.MapHealthChecks("/health");
 
     app.UseSharedCors();
     app.UseSharedSwagger();

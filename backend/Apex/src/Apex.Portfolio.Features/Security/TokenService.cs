@@ -8,7 +8,7 @@ public static class TokenService
     public static RsaSecurityKey CreateValidationKey(string publicKey)
     {
         using var rsa = RSA.Create();
-        rsa.ImportFromPem(publicKey);
+        rsa.ImportSubjectPublicKeyInfo(Convert.FromBase64String(publicKey), out _);
 
         var key = new RsaSecurityKey(rsa.ExportParameters(includePrivateParameters: false));
         if (key.KeySize < 2048)

@@ -12,10 +12,10 @@ public sealed class TokenService(IOptions<AuthOptions> options) : ITokenService
     private readonly AuthOptions _options = options.Value;
     private readonly RsaSecurityKey _signingKey = CreateSigningKey(options.Value.PrivateKey);
 
-    public static RsaSecurityKey CreateSigningKey(string privateKeyPem)
+    public static RsaSecurityKey CreateSigningKey(string privateKey)
     {
         using var rsa = RSA.Create();
-        rsa.ImportFromPem(privateKeyPem);
+        rsa.ImportPkcs8PrivateKey(Convert.FromBase64String(privateKey), out _);
 
         return new RsaSecurityKey(rsa.ExportParameters(includePrivateParameters: true))
         {

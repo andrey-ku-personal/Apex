@@ -34,10 +34,15 @@ finally
 
 static void RegisterServices(WebApplicationBuilder builder)
 {
+    builder.Services.AddServiceDiscovery();
+
     builder.Services.AddAuthRateLimiter();
 
     builder.Services.AddReverseProxy()
-        .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+        .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
+        .AddServiceDiscoveryDestinationResolver();
+
+    builder.Services.AddHealthChecks();
 }
 
 static void ConfigureApplication(WebApplication app)
@@ -49,4 +54,6 @@ static void ConfigureApplication(WebApplication app)
     app.UseRateLimiter();
 
     app.MapReverseProxy();
+
+    app.MapHealthChecks("/health");
 }

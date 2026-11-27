@@ -46,7 +46,12 @@ static void RegisterServices(WebApplicationBuilder builder)
     builder.Services.AddFeaturesDependencies(builder.Configuration);
     builder.Services.AddSharedCors();
     builder.Services.AddSharedSwagger("Apex.Portfolio API", "Apex.Portfolio API - bonds and bond operations");
+    AuthServiceSetup(builder);
+    builder.Services.AddHealthChecks();
+}
 
+static void AuthServiceSetup(WebApplicationBuilder builder)
+{
     var publicKey = builder.Configuration["Authentication:PublicKey"];
     ArgumentException.ThrowIfNullOrWhiteSpace(publicKey);
 
@@ -85,6 +90,8 @@ static void ConfigureApplication(WebApplication app)
 
     app.UseMiddleware<CorrelationIdMiddleware>();
     app.UseMiddleware<RequestLoggingMiddleware>();
+
+    app.MapHealthChecks("/health");
 
     app.UseSharedCors();
     app.UseSharedSwagger();
